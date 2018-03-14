@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <title>Meme Finder</title>
+
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+
+</head>
+<body>
+
+    <h1>MEME FINDER</h1>
+    <hr>
+
+    {% block content %}{% endblock %}
+
+    <hr>
+    <p>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    </p>
+
+</body>
+</html>
