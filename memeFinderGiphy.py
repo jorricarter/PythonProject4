@@ -1,6 +1,7 @@
 # GIPHY API documents https://developers.giphy.com/docs/
 # GIPHY Python client document https://github.com/Giphy/giphy-python-client
 
+import os
 import re
 import giphy_client
 from giphy_client.rest import ApiException
@@ -11,7 +12,7 @@ from pprint import pprint
 def get_meme(keyword):
     # create an instance of the API class
     api_instance = giphy_client.DefaultApi()
-    api_key = 'j5jfFyrNeH00309l3bVY2WpMeLJbXpB5'  # str | "OUR" Giphy API Key. Need to port it to environment variable later on.
+    api_key = os.environ['GIPHY_KEY']  # str | "OUR" Giphy API Key. Need to port it to environment variable later on.
     q = keyword  # str | Search query term or prhase.
     limit = 1  # int | The maximum number of records to return. (optional) (default to 25)
     offset = 0  # int | An optional results offset. Defaults to 0. (optional) (default to 0)
