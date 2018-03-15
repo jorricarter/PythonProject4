@@ -1,0 +1,69 @@
+# reddit api documentation https://www.reddit.com/dev/api/
+# PRAW documentation https://praw.readthedocs.io/en/latest/
+
+import praw
+import os
+import random
+from praw.exceptions import APIException, ClientException, PRAWException
+from pprint import pprint
+
+
+def get_meme(keyword, meme_only):
+
+    # create api instance
+    client_id = os.environ['REDDIT_ID']
+    client_secret = os.environ['REDDIT_SECRET']
+
+    reddit = praw.Reddit(client_id=client_id,
+                         client_secret=client_secret,
+                         redirect_uri='/',
+                         user_agent='testscript by /u/sz8386pr')
+
+    # if meme only check box is selected, append meme to the keyword
+    if meme_only == "on":
+        subreddit = 'meme'
+    else:
+        subreddit = 'all'
+
+    # search parameters.
+    # ToDo: In theory, query with the site: filter should work, but it doesn't work realiably. Use keyword variable instead of query for now.
+    domain = 'i.redd.it'    # domain value to be used to modify query
+    query = keyword + " site:" + domain  # site:i.redd.it finds submission link hosted by i.redd.it
+    sort = 'relevance'    # Can be one of: relevance, hot, top, new, comments. (default: relevance).
+    syntax = 'lucene'   # Can be one of: cloudsearch, lucene, plain (default: lucene).
+    time_filter = 'all'     # Can be one of: all, day, hour, month, week, year (default: all).
+
+    try:
+        # create a memes list and if the submission url ends with the file extension
+        # (In another words, 4th character from the end with a period), append the url and shortlink dictionary to the list
+        memes = []
+        for submission in reddit.subreddit(subreddit).search(keyword, sort=sort, syntax=syntax, time_filter=time_filter):
+            if submission.url[-4] == '.':
+                memes.append({'url': submission.url, 'shortlink': submission.shortlink})
+
+        # Pick one meme randomly from the list
+        meme = random.choice(memes)
+
+        reddit_meme = meme['url']  # img src
+        reddit_meme_link = meme['shortlink']   # reddit post link
+
+        # for testing
+        # print(reddit_meme, reddit_meme_link)
+
+        return reddit_meme, reddit_meme_link
+
+    # http://praw.readthedocs.io/en/latest/code_overview/exceptions.html#praw.exceptions.APIException
+    except APIException as e:
+        print(e.message)
+        print(e.error_type)
+        print(e.field)
+
+    except ClientException or PRAWException as e:
+        print(e)
+
+
+# # Enable for the command line testing
+# if __name__ == "__main__":
+#     keyword = input('Enter a keyword to search a meme for: ')
+#     get_meme(keyword, 'on')
+

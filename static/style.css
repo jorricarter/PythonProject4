@@ -1,8 +1,19 @@
 body{
     text-align: center;
 }
+table {
+    width=100%;
+}
+
+td{
+width: 300px;
+}
 
 img{
-    width: 300;
+    width: 300px;
     height: auto;
+}
+
+.text_center{
+    text-align: center;
 }

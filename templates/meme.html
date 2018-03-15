@@ -2,18 +2,18 @@
 {% block content %}
 
 
-    <div class="container">
+    <div id="memes" class="container">
         <h1>{{keyword}}</h1>
         <table>
             <tr>
-                <th>GIPHY</th>
-                <th>IMGUR</th>
-                <th>REDDIT</th>
+                <th class="text_center">GIPHY</th>
+                <th class="text_center">IMGUR</th>
+                <th class="text_center">REDDIT</th>
             </tr>
             <tr>
                 <td><a href="{{giphy_meme_link}}"><img src="{{giphy_meme}}"></a></td>
                 <td><a href="{{imgur_meme_link}}"><img src="{{imgur_meme}}"></a></td>
-                <td></td>
+                <td><a href="{{reddit_meme_link}}"><img src="{{reddit_meme}}"></a></td>
             </tr>
         </table>
 
