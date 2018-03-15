@@ -1,12 +1,19 @@
 # GIPHY API documents https://developers.giphy.com/docs/
 # GIPHY Python client document https://github.com/Giphy/giphy-python-client
 
+
+
 import random
 import os
 import re
 import giphy_client
+import logging
 from giphy_client.rest import ApiException
 from pprint import pprint
+
+
+# logging setup
+log = logging.getLogger(__name__)
 
 
 # finds one downsized gif link from GIPHY using the user input as the search query
@@ -24,6 +31,9 @@ def get_meme(keyword, meme_only):
     # if meme only checkbox is unchecked, just use the keyword without "meme" appended
     if meme_only is None:
         q = keyword
+
+    # checks if q value is as intended. Keyword if meme only checkbox is unselected, Keyword + " meme" if selected
+    logging.debug("keyword: " + q)
 
     try:
         # Search Endpoint
@@ -54,7 +64,7 @@ def get_meme(keyword, meme_only):
         return giphy_meme, giphy_meme_link
 
     except ApiException as e:
-        print("Exception when calling DefaultApi->gifs_search_get: %s\n" % e)
+        logging.error("Exception when calling DefaultApi->gifs_search_get: %s\n" % e)
         return 'error'
 
 

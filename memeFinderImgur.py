@@ -7,6 +7,11 @@ from imgurpython import ImgurClient
 from imgurpython.helpers.error import ImgurClientError
 from imgurpython.imgur.models.gallery_album import GalleryAlbum
 from pprint import pprint
+import logging
+
+
+# logging setup
+log = logging.getLogger(__name__)
 
 
 # https://api.imgur.com/3/gallery/search?q={search term}
@@ -17,13 +22,19 @@ def get_meme(keyword, meme_only):
     client_secret = os.environ['IMGUR_SECRET']
     client = ImgurClient(client_id, client_secret)
 
+    # client authorization debug
+    logging.debug("imgur auth url: " + client.get_auth_url())
+
     # if meme only check box is selected, append meme to the keyword
     if meme_only == "on":
         keyword += " meme"
 
+    # checks if q value is as intended. Keyword if meme only checkbox is unselected, Keyword + " meme" if selected
+    logging.debug("keyword: " + keyword)
+
     # search parameters
     extension = 'jpg'  # jpg | png | gif | anigif (animated gif) | album Default:
-    q = keyword + " ext:" + extension  # q_type extension only
+    q = keyword + " ext:" + extension  # q_type extension only. Use q instead of keyword
     sort = 'viral'  # time | viral | top - defaults to time
     window = 'all'  # Change the date range of the request if the sort is 'top', day | week | month | year | all, defaults to all.
     page = 0 # integer - the data paging number
@@ -51,8 +62,8 @@ def get_meme(keyword, meme_only):
         return imgur_meme, imgur_meme_link
 
     except ImgurClientError as e:
-        print(e.error_message)
-        print(e.status_code)
+        logging.error(e.error_message)
+        logging.error(e.status_code)
 
 
 # # Enable for the command line testing

@@ -6,6 +6,11 @@ import os
 import random
 from praw.exceptions import APIException, ClientException, PRAWException
 from pprint import pprint
+import logging
+
+
+# logging setup
+log = logging.getLogger(__name__)
 
 
 def get_meme(keyword, meme_only):
@@ -19,11 +24,17 @@ def get_meme(keyword, meme_only):
                          redirect_uri='/',
                          user_agent='testscript by /u/sz8386pr')
 
+    # check if the reddit api login status is read-only
+    logging.debug("reddit read only?:" + str(reddit.read_only))
+
     # if meme only check box is selected, append meme to the keyword
     if meme_only == "on":
         subreddit = 'meme'
     else:
         subreddit = 'all'
+
+    # Checks if subreddit value is correct
+    logging.debug("subreddit value: " + subreddit)
 
     # search parameters.
     # ToDo: In theory, query with the site: filter should work, but it doesn't work realiably. Use keyword variable instead of query for now.
@@ -54,12 +65,12 @@ def get_meme(keyword, meme_only):
 
     # http://praw.readthedocs.io/en/latest/code_overview/exceptions.html#praw.exceptions.APIException
     except APIException as e:
-        print(e.message)
-        print(e.error_type)
-        print(e.field)
+        logging.error(e.message)
+        logging.error(e.error_type)
+        logging.error(e.field)
 
     except ClientException or PRAWException as e:
-        print(e)
+        logging.error(e)
 
 
 # # Enable for the command line testing
