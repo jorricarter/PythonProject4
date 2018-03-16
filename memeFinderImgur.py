@@ -66,6 +66,11 @@ def get_meme(keyword, meme_only):
         logging.error(e.error_message)
         logging.error(e.status_code)
 
+    except IndexError as ie:
+        logging.error(ie)
+        return None
+
+
 
 # Enable for the command line testing
 if __name__ == "__main__":

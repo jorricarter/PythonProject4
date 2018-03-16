@@ -45,21 +45,21 @@ def meme():
     imgur_meme = memeFinderImgur.get_meme(keyword, meme_only)
     reddit_meme = memeFinderReddit.get_meme(keyword, meme_only)
 
-    # logging the meme data
-    logging.debug("{}: title:{} img:{} link:{}".format(giphy_meme.source.upper(), giphy_meme.title,
-                                                       giphy_meme.img_src, giphy_meme.post_link))
-    logging.debug("{}: title:{} img:{} link:{}".format(imgur_meme.source.upper(), imgur_meme.title,
-                                                       imgur_meme.img_src, imgur_meme.post_link))
-    logging.debug("{}: title:{} img:{} link:{}".format(reddit_meme.source.upper(), reddit_meme.title,
-                                                       reddit_meme.img_src, reddit_meme.post_link))
+    try:
+        # logging the meme data
+        logging.debug("{}: title:{} img:{} link:{}".format(giphy_meme.source.upper(), giphy_meme.title,
+                                                           giphy_meme.img_src, giphy_meme.post_link))
+        logging.debug("{}: title:{} img:{} link:{}".format(imgur_meme.source.upper(), imgur_meme.title,
+                                                           imgur_meme.img_src, imgur_meme.post_link))
+        logging.debug("{}: title:{} img:{} link:{}".format(reddit_meme.source.upper(), reddit_meme.title,
+                                                           reddit_meme.img_src, reddit_meme.post_link))
+
+    except AttributeError as ae:
+        logging.error(ae)
 
     return render_template('meme.html', keyword=keyword,
-                           giphy_title=giphy_meme.title, giphy_img_src=giphy_meme.img_src,
-                           giphy_post_link=giphy_meme.post_link,
-                           imgur_title=imgur_meme.title, imgur_img_src=imgur_meme.img_src,
-                           imgur_post_link=imgur_meme.post_link,
-                           reddit_title=reddit_meme.title, reddit_img_src=reddit_meme.img_src,
-                           reddit_post_link=reddit_meme.post_link,)
+                           giphy_meme=giphy_meme, imgur_meme=imgur_meme, reddit_meme=reddit_meme)
+
 
 
 if __name__ == "__main__":

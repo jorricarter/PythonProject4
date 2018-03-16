@@ -61,6 +61,10 @@ def get_meme(keyword, meme_only):
     except ValueError as ve:  # if no json data is found during requests.get
         logging.error(ve)
 
+    except IndexError as ie:  # if search didn't find any result with tht keyword
+        logging.error(ie)
+        return None
+
 
 # # Used for the testing purposes
 # if __name__ == "__main__":

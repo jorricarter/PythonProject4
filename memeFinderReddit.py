@@ -72,6 +72,10 @@ def get_meme(keyword, meme_only):
     except ClientException or PRAWException as e:
         logging.error(e)
 
+    except IndexError as ie:    # when there were no
+        logging.error(ie)
+        return None
+
 
 # # Enable for the command line testing
 # if __name__ == "__main__":

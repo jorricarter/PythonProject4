@@ -4,3 +4,5 @@ class Meme:
         self.title = title      # post title
         self.img_src = img_src    # direct image link
         self.post_link = post_link  # post link
+
+        i
