@@ -1,9 +1,7 @@
 # Flask documentation http://flask.pocoo.org/docs/0.12/
 # WTForms documentation https://wtforms.readthedocs.io/en/stable/
 
-import memeFinderGiphy
-import memeFinderImgur
-import memeFinderReddit
+import memeFinder
 import logging
 from flask import Flask, render_template, request, redirect, url_for
 from wtforms import Form, StringField, validators   # Flast input validator extension module
@@ -41,25 +39,49 @@ def meme():
     logging.debug('keyword: ' + keyword + " --search query")
     logging.debug('meme_only: ' + meme_only + " --on for meme only checked/ None for unchecked")
 
+    memes = memeFinder.find_meme(keyword, meme_only)
+
     # giphy/imgur/reddit meme class objects
-    giphy_meme = memeFinderGiphy.get_meme(keyword, meme_only)
-    imgur_meme = memeFinderImgur.get_meme(keyword, meme_only)
-    reddit_meme = memeFinderReddit.get_meme(keyword, meme_only)
+    for meme in memes:
+        if meme.source == 'giphy':
+            giphy_meme = meme
+        elif meme.source == 'imgur':
+            imgur_meme = meme
+        else:
+            reddit_meme = meme
 
-    try:
-        # logging the meme data
-        logging.debug("{}: title:{} img:{} link:{}".format(giphy_meme.source.upper(), giphy_meme.title,
-                                                           giphy_meme.img_src, giphy_meme.post_link))
-        logging.debug("{}: title:{} img:{} link:{}".format(imgur_meme.source.upper(), imgur_meme.title,
-                                                           imgur_meme.img_src, imgur_meme.post_link))
-        logging.debug("{}: title:{} img:{} link:{}".format(reddit_meme.source.upper(), reddit_meme.title,
-                                                           reddit_meme.img_src, reddit_meme.post_link))
+        try:
+            # logging the meme data
+            logging.debug("{}: title:{} img:{} link:{}".format(meme.source.upper(), meme.title, meme.img_src, meme.post_link))
 
-    except AttributeError as ae:
-        logging.error(ae)
+        except AttributeError as ae:
+            logging.error(ae)
 
-    return render_template('meme.html', keyword=keyword,
-                           giphy_meme=giphy_meme, imgur_meme=imgur_meme, reddit_meme=reddit_meme)
+    return render_template('meme.html', keyword=keyword, memes=memes)
+                           # giphy_meme=giphy_meme, imgur_meme=imgur_meme, reddit_meme=reddit_meme)
+
+
+
+
+    # # giphy/imgur/reddit meme class objects
+    # giphy_meme = memeFinderGiphy.get_meme(keyword, meme_only)
+    # imgur_meme = memeFinderImgur.get_meme(keyword, meme_only)
+    # reddit_meme = memeFinderReddit.get_meme(keyword, meme_only)
+    #
+    # try:
+    #     # logging the meme data
+    #     logging.debug("{}: title:{} img:{} link:{}".format(giphy_meme.source.upper(), giphy_meme.title,
+    #                                                        giphy_meme.img_src, giphy_meme.post_link))
+    #     logging.debug("{}: title:{} img:{} link:{}".format(imgur_meme.source.upper(), imgur_meme.title,
+    #                                                        imgur_meme.img_src, imgur_meme.post_link))
+    #     logging.debug("{}: title:{} img:{} link:{}".format(reddit_meme.source.upper(), reddit_meme.title,
+    #                                                        reddit_meme.img_src, reddit_meme.post_link))
+    #
+    # except AttributeError as ae:
+    #     logging.error(ae)
+    #
+    # return render_template('meme.html', keyword=keyword,
+    #                        giphy_meme=giphy_meme, imgur_meme=imgur_meme, reddit_meme=reddit_meme)
 
 
 

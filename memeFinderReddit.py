@@ -3,10 +3,8 @@
 
 import praw
 import os
-import random
 import logging
 from praw.exceptions import APIException, ClientException, PRAWException
-from memeFinder import Meme
 
 
 # logging setup
@@ -14,6 +12,8 @@ log = logging.getLogger(__name__)
 
 
 def get_meme(keyword, meme_only):
+
+    logging.info("Accessing REDDIT API")
 
     # create api instance
     client_id = os.environ['REDDIT_ID']
@@ -52,16 +52,17 @@ def get_meme(keyword, meme_only):
             if submission.url[-4] == '.':
                 memes.append({'title': submission.title, 'url': submission.url, 'shortlink': submission.shortlink})
 
-        # Pick one meme randomly from the list
-        meme = random.choice(memes)
-
-        title = meme['title']   # post title
-        imc_src = meme['url']  # img src
-        post_link = meme['shortlink']   # reddit post link
-
-        reddit_meme = Meme('reddit', title, imc_src, post_link)
-
-        return reddit_meme
+        return memes
+        # # Pick one meme randomly from the list
+        # meme = random.choice(memes)
+        #
+        # title = meme['title']   # post title
+        # imc_src = meme['url']  # img src
+        # post_link = meme['shortlink']   # reddit post link
+        #
+        # reddit_meme = Meme('reddit', title, imc_src, post_link)
+        #
+        # return reddit_meme
 
     # http://praw.readthedocs.io/en/latest/code_overview/exceptions.html#praw.exceptions.APIException
     except APIException as e:
@@ -72,9 +73,23 @@ def get_meme(keyword, meme_only):
     except ClientException or PRAWException as e:
         logging.error(e)
 
-    except IndexError as ie:    # when there were no
-        logging.error(ie)
-        return Meme('reddit')
+    # except IndexError as ie:    # when there were no
+    #     logging.error(ie)
+    #     return Meme('reddit')
+
+
+def create_meme_object(meme):
+    from memeFinder import Meme
+
+    title = str(meme['title'])   # post title
+    imc_src = meme['url']  # img src
+    post_link = meme['shortlink']   # reddit post link
+
+    reddit_meme = Meme('reddit', title, imc_src, post_link)
+
+    return reddit_meme
+
+
 
 
 # # Enable for the command line testing

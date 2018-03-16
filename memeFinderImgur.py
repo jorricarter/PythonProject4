@@ -1,12 +1,10 @@
 # imgur api docs https://apidocs.imgur.com/
 # imgur python library https://github.com/Imgur/imgurpython
 
-import random
 import os
 from imgurpython import ImgurClient
 from imgurpython.helpers.error import ImgurClientError
 from imgurpython.imgur.models.gallery_album import GalleryAlbum
-from memeFinder import Meme
 import logging
 
 
@@ -16,6 +14,8 @@ log = logging.getLogger(__name__)
 
 # https://api.imgur.com/3/gallery/search?q={search term}
 def get_meme(keyword, meme_only):
+
+    logging.info("Accessing IMGUR API")
 
     # create api instance
     client_id = os.environ['IMGUR_ID']
@@ -43,33 +43,54 @@ def get_meme(keyword, meme_only):
         # Search request
         memes = client.gallery_search(keyword, sort=sort, window=window, page=page)
 
-        # gallery_search finds multiple images, so we pick one randomly from the list
-        meme = random.choice(memes)
+        return memes
 
-        title = meme.title
-
-        # checks if meme is a GalleryAlbum object
-        #   necessary because the search finds both GalleryAlbum objects and GalleryImage objects, both of which
-        #   has different data structure.
-        if type(meme) is GalleryAlbum:
-            img_src = meme.images[0]['link']  # img source
-        else:
-            img_src = meme.link
-
-        post_link = meme.link # img page
-
-        imgur_meme = Meme('imgur', title, img_src, post_link)
-
-        return imgur_meme
+        # # gallery_search finds multiple images, so we pick one randomly from the list
+        # meme = random.choice(memes)
+        #
+        # title = meme.title
+        #
+        # # checks if meme is a GalleryAlbum object
+        # #   necessary because the search finds both GalleryAlbum objects and GalleryImage objects, both of which
+        # #   has different data structure.
+        # if type(meme) is GalleryAlbum:
+        #     img_src = meme.images[0]['link']  # img source
+        # else:
+        #     img_src = meme.link
+        #
+        # post_link = meme.link # img page
+        #
+        # imgur_meme = Meme('imgur', title, img_src, post_link)
+        #
+        # return imgur_meme
 
     except ImgurClientError as e:
         logging.error(e.error_message)
         logging.error(e.status_code)
 
-    except IndexError as ie:
-        logging.error(ie)
-        return Meme('imgur')
+    # except IndexError as ie:
+    #     logging.error(ie)
+    #     return Meme('imgur')
 
+
+def create_meme_object(meme):
+    from memeFinder import Meme
+
+    title = meme.title
+
+    # checks if meme is a GalleryAlbum object
+    #   necessary because the search finds both GalleryAlbum objects and GalleryImage objects, both of which
+    #   has different data structure.
+    if type(meme) is GalleryAlbum:
+        img_src = meme.images[0]['link']  # img source
+    else:
+        img_src = meme.link
+
+    post_link = meme.link # img page
+
+    imgur_meme = Meme('imgur', title, img_src, post_link)
+
+    return imgur_meme
 
 
 # Enable for the command line testing
