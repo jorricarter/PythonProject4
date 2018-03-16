@@ -4,6 +4,7 @@
 
     <div id="memes" class="container">
         <h1>{{keyword}}</h1>
+
         <table>
             <tr>
                 <th class="text_center">GIPHY</th>
@@ -11,11 +12,17 @@
                 <th class="text_center">REDDIT</th>
             </tr>
             <tr>
-                <td><a href="{{giphy_meme_link}}"><img src="{{giphy_meme}}"></a></td>
-                <td><a href="{{imgur_meme_link}}"><img src="{{imgur_meme}}"></a></td>
-                <td><a href="{{reddit_meme_link}}"><img src="{{reddit_meme}}"></a></td>
+                <td><a href="{{giphy_post_link}}"><img src="{{giphy_img_src}}"></a></td>
+                <td><a href="{{imgur_post_link}}"><img src="{{imgur_img_src}}"></a></td>
+                <td><a href="{{reddit_post_link}}"><img src="{{reddit_img_src}}"></a></td>
+            </tr>
+            <tr>
+                <td>{{giphy_title}}</td>
+                <td>{{imgur_title}}</td>
+                <td>{{reddit_title}}</td>
             </tr>
         </table>
+
 
       </div>
 

@@ -40,20 +40,26 @@ def meme():
     logging.debug('keyword: ' + keyword + " --search query")
     logging.debug('meme_only: ' + meme_only + " --on for meme only checked/ None for unchecked")
 
-    # giphy/imgur/reddit img and the post links
-    giphy_meme, giphy_meme_link = memeFinderGiphy.get_meme(keyword, meme_only)
-    imgur_meme, imgur_meme_link = memeFinderImgur.get_meme(keyword, meme_only)
-    reddit_meme, reddit_meme_link = memeFinderReddit.get_meme(keyword, meme_only)
+    # giphy/imgur/reddit meme class objects
+    giphy_meme = memeFinderGiphy.get_meme(keyword, meme_only)
+    imgur_meme = memeFinderImgur.get_meme(keyword, meme_only)
+    reddit_meme = memeFinderReddit.get_meme(keyword, meme_only)
 
-    # logging the meme img and the page links
-    logging.debug("GIPHY: img:{} link:{}".format(giphy_meme, giphy_meme_link))
-    logging.debug("IMGUR: img:{} link:{}".format(imgur_meme, imgur_meme_link))
-    logging.debug("REDDIT: img:{} link:{}".format(reddit_meme, reddit_meme_link))
+    # logging the meme data
+    logging.debug("{}: title:{} img:{} link:{}".format(giphy_meme.source.upper(), giphy_meme.title,
+                                                       giphy_meme.img_src, giphy_meme.post_link))
+    logging.debug("{}: title:{} img:{} link:{}".format(imgur_meme.source.upper(), imgur_meme.title,
+                                                       imgur_meme.img_src, imgur_meme.post_link))
+    logging.debug("{}: title:{} img:{} link:{}".format(reddit_meme.source.upper(), reddit_meme.title,
+                                                       reddit_meme.img_src, reddit_meme.post_link))
 
     return render_template('meme.html', keyword=keyword,
-                           giphy_meme=giphy_meme, giphy_meme_link=giphy_meme_link,
-                           imgur_meme=imgur_meme, imgur_meme_link=imgur_meme_link,
-                           reddit_meme=reddit_meme, reddit_meme_link=reddit_meme_link)
+                           giphy_title=giphy_meme.title, giphy_img_src=giphy_meme.img_src,
+                           giphy_post_link=giphy_meme.post_link,
+                           imgur_title=imgur_meme.title, imgur_img_src=imgur_meme.img_src,
+                           imgur_post_link=imgur_meme.post_link,
+                           reddit_title=reddit_meme.title, reddit_img_src=reddit_meme.img_src,
+                           reddit_post_link=reddit_meme.post_link,)
 
 
 if __name__ == "__main__":

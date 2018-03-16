@@ -4,9 +4,9 @@
 import praw
 import os
 import random
-from praw.exceptions import APIException, ClientException, PRAWException
-from pprint import pprint
 import logging
+from praw.exceptions import APIException, ClientException, PRAWException
+from memeFinder import Meme
 
 
 # logging setup
@@ -50,18 +50,18 @@ def get_meme(keyword, meme_only):
         memes = []
         for submission in reddit.subreddit(subreddit).search(keyword, sort=sort, syntax=syntax, time_filter=time_filter):
             if submission.url[-4] == '.':
-                memes.append({'url': submission.url, 'shortlink': submission.shortlink})
+                memes.append({'title': submission.title, 'url': submission.url, 'shortlink': submission.shortlink})
 
         # Pick one meme randomly from the list
         meme = random.choice(memes)
 
-        reddit_meme = meme['url']  # img src
-        reddit_meme_link = meme['shortlink']   # reddit post link
+        title = meme['title']   # post title
+        imc_src = meme['url']  # img src
+        post_link = meme['shortlink']   # reddit post link
 
-        # for testing
-        # print(reddit_meme, reddit_meme_link)
+        reddit_meme = Meme('reddit', title, imc_src, post_link)
 
-        return reddit_meme, reddit_meme_link
+        return reddit_meme
 
     # http://praw.readthedocs.io/en/latest/code_overview/exceptions.html#praw.exceptions.APIException
     except APIException as e:
