@@ -63,7 +63,7 @@ def get_meme(keyword, meme_only):
 
     except IndexError as ie:  # if search didn't find any result with tht keyword
         logging.error(ie)
-        return None
+        return Meme('giphy')
 
 
 # # Used for the testing purposes

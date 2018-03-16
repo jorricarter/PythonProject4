@@ -8,6 +8,7 @@ import logging
 from flask import Flask, render_template, request, redirect, url_for
 from wtforms import Form, StringField, validators   # Flast input validator extension module
 from memeLogging import logging_setup
+from memeFinder import Meme
 
 # setup logging config
 logging_setup()

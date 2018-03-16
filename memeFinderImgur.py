@@ -68,7 +68,7 @@ def get_meme(keyword, meme_only):
 
     except IndexError as ie:
         logging.error(ie)
-        return None
+        return Meme('imgur')
 
 
 

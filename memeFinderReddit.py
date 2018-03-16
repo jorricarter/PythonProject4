@@ -74,7 +74,7 @@ def get_meme(keyword, meme_only):
 
     except IndexError as ie:    # when there were no
         logging.error(ie)
-        return None
+        return Meme('reddit')
 
 
 # # Enable for the command line testing
