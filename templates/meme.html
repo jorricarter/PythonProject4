@@ -42,57 +42,93 @@ var imgur_meme = { 'source': '{{ memes[1].source }}', 'title': '{{ memes[1].titl
 var reddit_meme = { 'source': '{{ memes[2].source }}', 'title': '{{ memes[2].title }}',
     'img_src': '{{ memes[2].img_src }}', 'post_link': '{{ memes[2].post_link}}'};
 
+// variables to check if user already has added meme to MemeBox
+var giphy_button_clicked = false;
+var imgur_button_clicked = false;
+var reddit_button_clicked = false;
+
 $(function() {
     $("button").click(function(){
 
         // If user presses I like it button under the giphy meme, post the giphy_meme dictionary
         //  if it's successful, alert that it's added to memebox, otherwise, alert that it's not
         if (this.id == "{{memes[0].source}} button") {
-            $.ajax({
-                url: '/memebox',
-                data: giphy_meme,
-                type: 'POST',
-                success: function() {
-                    alert('Added to MemeBox');
-                },
-                error: function(error) {
-                    alert('NOT Added to MemeBox');
-                }
-            });
-        }
+
+            // if user hasn't saved it/clicked the button, post the dictionary data
+            //  and then change the button_clicked to true.
+            // It won't add the same meme to MemeBox again
+
+            if (giphy_button_clicked === false) {
+                $.ajax({
+                    url: '/memebox',
+                    data: giphy_meme,
+                    type: 'POST',
+                    success: function() {
+                        alert('Added to MemeBox');
+                    },
+                    error: function(error) {
+                        alert('NOT Added to MemeBox');
+                    }
+                });  // ajax end
+
+                giphy_button_clicked = true;
+            }
+
+            else {
+                alert('Already added to MemeBox')
+            }
+        }  // if end
 
         // the same as above but for the button under the imgur meme
         else if (this.id == "{{memes[1].source}} button") {
-            $.ajax({
-                url: '/memebox',
-                data: imgur_meme,
-                type: 'POST',
-                success: function() {
-                    alert('Added to MemeBox');
-                },
-                error: function(error) {
-                    alert('NOT Added to MemeBox');
-                }
-            });
-        }
+
+            if (imgur_button_clicked === false) {
+                $.ajax({
+                    url: '/memebox',
+                    data: imgur_meme,
+                    type: 'POST',
+                    success: function() {
+                        alert('Added to MemeBox');
+                    },
+                    error: function(error) {
+                        alert('NOT Added to MemeBox');
+                    }
+                });  // ajax end
+
+                imgur_button_clicked = true;
+            }
+
+            else {
+                alert('Already added to MemeBox')
+            }
+        }  // else if end
 
         // the same as above but for the button under the reddit meme
         else if (this.id == "{{memes[2].source}} button") {
-            $.ajax({
-                url: '/memebox',
-                data: reddit_meme,
-                type: 'POST',
-                success: function() {
-                    alert('Added to MemeBox');
-                },
-                error: function(error) {
-                    alert('NOT Added to MemeBox');
-                }
-            });
-        }
 
-    });
-});
+            if (reddit_button_clicked === false) {
+                $.ajax({
+                    url: '/memebox',
+                    data: reddit_meme,
+                    type: 'POST',
+                    success: function() {
+                        alert('Added to MemeBox');
+                    },
+                    error: function(error) {
+                        alert('NOT Added to MemeBox');
+                    }
+                });  // ajax end
+
+                reddit_button_clicked = true;
+            }
+
+            else {
+                alert('Already added to MemeBox')
+            }
+        }  // else if end
+
+    });  // button click function end
+});  //jquery end
 
 </script>
 

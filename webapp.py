@@ -59,8 +59,8 @@ def memebox():
 
     # save a meme to MemeBox if user presses the button on the meme page
     if request.method == 'POST' and list(request.form)[0] == 'source':
-        meme = request.form.to_dict()   # Meme object in dictionary form
-        save_to_memebox(meme)
+        meme_dict = request.form.to_dict()   # Meme object in dictionary form
+        save_to_memebox(meme_dict)
         logging.info("Saved data: " + str(meme))
 
         # need to return something, else valueError will occur

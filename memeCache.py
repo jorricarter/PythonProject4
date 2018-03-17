@@ -45,7 +45,7 @@ def unpickle_data():
                 except EOFError:
                     break
 
-        logging.info("cache size: " + str(len(cache_data)/3) + " sets") # one set=keyword is consist of 3 api sources
+        logging.info("cache size: " + str(int(len(cache_data)/3)) + " set(s)") # one set=keyword is consist of 3 api sources
         return cache_data
 
     except FileNotFoundError as e:
@@ -56,11 +56,11 @@ def unpickle_data():
 
 
 # When user clicks "I like this meme!" button, that meme will be saved onto the file
-def save_to_memebox(meme):
+def save_to_memebox(meme_dict):
     from memeFinder import Meme
 
     # create Meme class object from dictionary
-    meme = Meme(meme['source'], meme['title'], meme['img_src'], meme['post_link'])
+    meme = Meme(meme_dict['source'], meme_dict['title'], meme_dict['img_src'], meme_dict['post_link'])
 
     # create cache_folder if not available
     try:
@@ -95,6 +95,7 @@ def load_memebox():
                     break
 
         logging.info("MemeBox size: " + str(len(memes)))
+        memes.reverse()  # make sure the latest meme comes on top
         return memes
 
     except FileNotFoundError as e:
@@ -108,6 +109,8 @@ def delete_meme(index):
 
     del memes[index]
     logging.info("Meme deleted")
+
+    memes.reverse()  # make sure memes would be saved as ascending order
 
     # overwrite the file with the meme-deleted list
     with open(memebox_file_path, "wb") as f:
