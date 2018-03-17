@@ -2,6 +2,9 @@ import pickle
 import os
 import logging
 
+
+# Path setting ######################################################################################################
+
 # cache path settings
 cache_folder = 'cache'  # cache folder name. Default = cache
 cache_file_name = 'cache.pickle'    # Default = cache.pickle
@@ -11,6 +14,9 @@ cache_file_path = os.path.join(cache_folder, cache_file_name)
 memebox_folder = 'memebox'
 memebox_file = 'memebox.pickle'
 memebox_file_path = os.path.join(memebox_folder, memebox_file)
+
+
+# Cache #############################################################################################################
 
 
 # pickles MemeCache lists for caching data
@@ -46,6 +52,9 @@ def unpickle_data():
         logging.error(e)
 
 
+# MemeBox ###########################################################################################################
+
+
 # When user clicks "I like this meme!" button, that meme will be saved onto the file
 def save_to_memebox(meme):
     from memeFinder import Meme
@@ -72,7 +81,16 @@ def load_memebox():
         with open(memebox_file_path, "rb") as f:
             while True:
                 try:
-                    memes.append(pickle.load(f))
+                    # load the initial load into temp_load for if statement
+                    temp_load = pickle.load(f)
+                    # if temp_load is instance of list, extend the memes list
+                    #   else, it's a Meme object, so we append to the memes list
+                    if isinstance(temp_load, list):
+                        memes.extend(temp_load)
+                    else:
+                        memes.append(temp_load)
+
+                # if it's end of the file, break the loop
                 except EOFError:
                     break
 
@@ -81,3 +99,18 @@ def load_memebox():
 
     except FileNotFoundError as e:
         logging.error(e)
+
+
+# When user clicks delete button from the MemeBox, delete the meme from the list/MemeBox
+def delete_meme(index):
+
+    memes = load_memebox()
+
+    del memes[index]
+    logging.info("Meme deleted")
+
+    # overwrite the file with the meme-deleted list
+    with open(memebox_file_path, "wb") as f:
+        pickle.dump(memes, f)
+
+

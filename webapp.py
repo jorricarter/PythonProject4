@@ -6,7 +6,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from wtforms import Form, StringField, validators   # Flast input validator extension module
 from memeLogging import logging_setup
 from memeFinder import find_meme
-from memeCache import save_to_memebox, load_memebox
+from memeCache import save_to_memebox, load_memebox, delete_meme
 
 
 # setup logging config
@@ -57,13 +57,33 @@ def meme():
 @app.route("/memebox", methods=['POST', 'GET'])
 def memebox():
 
-    # save a meme to MemeBox if user presses the button
-    if request.method == 'POST':
+    # save a meme to MemeBox if user presses the button on the meme page
+    if request.method == 'POST' and list(request.form)[0] == 'source':
         meme = request.form.to_dict()   # Meme object in dictionary form
         save_to_memebox(meme)
         logging.info("Saved data: " + str(meme))
-        return "something"  # No need to actually return useful as only gets the post when user clicks the save to memebox button
 
+        # need to return something, else valueError will occur
+        return "something"
+
+    # if user presses delete button beside the meme, delete the meme
+    elif request.method == 'POST' and list(request.form)[0] != 'source':
+
+        # get the name=(MemeBox index number) of the submit button
+        meme_delete = int(list(request.form)[0])
+
+        logging.debug("index " + str(meme_delete) + " will be deleted")  # debug msg
+
+        # delete the meme from the MemeBox using the index number
+        delete_meme(meme_delete)
+
+        # refresh MemeBox contents
+        memebox_items = load_memebox()
+
+        # And render the memebox.html using the refreshed list
+        return render_template('memebox.html', memebox_items=memebox_items)
+
+    # if user visits the MemeBox via the link at the bottom of the page
     else:
         memebox_items = load_memebox()
 

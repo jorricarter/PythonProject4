@@ -6,29 +6,34 @@
 
     <h1>MEMEBOX!</h1>
 
-
+    <form name="keyword_form" action="{{ url_for('memebox') }}" method="POST">
     <table>
 
-        {% if memebox_items == None %}
+        {% if memebox_items == None  or memebox_items|length < 1%}
 
             <p>Uh oh, there are no items in your MemeBox!</p>
 
         {% else %}
 
-            {% for item in memebox_items %}
+        {% for item in memebox_items %}
 
-                <tr>
-                    <td><a href="{{item.post_link}}"><img src="{{item.img_src}}"></a></td>
-                </tr>
+            <tr>
+                <td><a href="{{item.post_link}}"><img src="{{item.img_src}}"></a></td>
 
-            {% endfor %}
+                {# loop.index reference https://stackoverflow.com/questions/12145434/how-to-output-loop-counter-in-python-jinja-template #}
+                <td>
+                    <input type="submit" name='{{loop.index-1}}' value="Delete">
+                </td>
+            </tr>
+
+        {% endfor %}
 
 
         {% endif %}
 
 
     </table>
-
+    </form>
 </div>
 
 
