@@ -22,7 +22,7 @@
 
                 {# loop.index reference https://stackoverflow.com/questions/12145434/how-to-output-loop-counter-in-python-jinja-template #}
                 <td>
-                    <input type="submit" name='{{loop.index-1}}' value="Delete">
+                    <input type="submit" name='{{loop.index-1}}' value="Delete"  onclick="return confirm('Do you really want to delete this dank meme???')" />
                 </td>
             </tr>
 
