@@ -24,30 +24,27 @@ class TestGetMeme(unittest.TestCase):
         print('testdata')
         print(memeFinderGiphy.get_meme("cat", True))
         print('testdata')
-# I DONT THINK THIS IS WORKING CORRECTLY, BUT I AM TRYING TO TEST THE METHOD AND SEE HOW IT REACTS NORMALLY TE DETERMINE
-# WHAT FORMAT OF RESPONSE I SHOULD EXPECT FROM IT.
-    # # mock to replace requests.get
-    # @staticmethod
-    # def mock_requests_get(key):
-    #     # Making a mock response as it's own class since it's it's own type of object
-    #     class MockResponse:
-    #         def __init__(self, json_data, status_code):
-    #             self.json_data = json_data
-    #             self.status_code = status_code
-    #         # when json is used return json_data as it would if it were from a real api
-    #
-    #         def json(self):
-    #             return self.json_data
-    #     # 200 is standard code for url receiving data
-    #     return MockResponse({"key": "data"}, 200)
-    #
-    # class TestGetMemeJson(unittest.TestCase):
-    #
-    #     # creating mock to replace requests to the url
-    #     @mock.patch('requests.get', side_effect=mock_requests_get)
-    #     def test_mock_request(self, mock_get):
-    #         json_data = memeFinderGiphy.get_meme()
-    #         self.assertEqual(json_data, {"key": "data"})
+# json is returning 'none' so my mock is not working.
+    # mock to replace requests.get
+
+    def mock_requests_get(*key, **args):
+        # Making a mock response as it's own class since it's it's own type of object
+        class MockResponse:
+            def __init__(self, json_data, status_code):
+                self.json_data = json_data
+                self.status_code = status_code
+
+            # when json is used return json_data as it would if it were from a real api
+            def json(self):
+                return self.json_data
+        # 200 is standard code for url receiving data
+        return MockResponse({"key": "data"}, 200)
+
+    # creating mock to replace requests to the url
+    @mock.patch('requests.get', side_effect=mock_requests_get())
+    def test_mock_request(self, mock_get):
+        json_data = memeFinderGiphy.get_meme('cat', True)
+        self.assertEqual({"key": "data"}, json_data)
 
 
 if __name__ == '__main__':
