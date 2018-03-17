@@ -13,7 +13,9 @@ class TestGetMeme(unittest.TestCase):
     #     z = 0
     #
     # def tearDown(self):
-
+    #
+    # I TRIED PRINTING RETURN TO SEE WHAT IS RETURNED WHEN PROGRAM RUNS CORRECTLY.
+    # WHEN I DO THIS, I GET AN ERROR EVEN THOUGH THE PROGRAM WORKS
     def test_get_meme_mock_api_CHECK_returns_mock_data(self):
         print('testdata')
         print(memeFinderGiphy.get_meme("cat", True))
