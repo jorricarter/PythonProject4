@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+<div id="memebox" class="container">
+
+    <h1>MEMEBOX!</h1>
+
+
+    <table>
+
+        {% if memebox_items == None %}
+
+            <p>Uh oh, there are no items in your MemeBox!</p>
+
+        {% else %}
+
+            {% for item in memebox_items %}
+
+                <tr>
+                    <td><a href="{{item.post_link}}"><img src="{{item.img_src}}"></a></td>
+                </tr>
+
+            {% endfor %}
+
+
+        {% endif %}
+
+
+    </table>
+
+</div>
+
+
+{% endblock %}

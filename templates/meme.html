@@ -2,34 +2,90 @@
 {% block content %}
 
 
-    <div id="memes" class="container">
-        <h1>{{keyword}}</h1>
+<div id="memes" class="container">
 
-        <table>
-            <tr>
-                <th class="source">{{memes[0].source}}</th>
-                <th class="source">{{memes[1].source}}</th>
-                <th class="source">{{memes[2].source}}</th>
-            </tr>
-            <tr>
-                <td><a href="{{memes[0].post_link}}"><img src="{{memes[0].img_src}}"></a></td>
-                <td><a href="{{memes[1].post_link}}"><img src="{{memes[1].img_src}}"></a></td>
-                <td><a href="{{memes[2].post_link}}"><img src="{{memes[2].img_src}}"></a></td>
-            </tr>
-            <tr>
-                <td>{{memes[0].title}}</td>
-                <td>{{memes[1].title}}</td>
-                <td>{{memes[2].title}}</td>
-            </tr>
-            <tr>
-                <td>                </td>
-                <td>                </td>
-                <td>                </td>
-            </tr>
-        </table>
+    <h1>{{keyword}}</h1>
+
+    <table>
+        <tr>
+            <th class="source">{{memes[0].source}}</th>
+            <th class="source">{{memes[1].source}}</th>
+            <th class="source">{{memes[2].source}}</th>
+        </tr>
+        <tr>
+            <td><a href="{{memes[0].post_link}}"><img src="{{memes[0].img_src}}"></a></td>
+            <td><a href="{{memes[1].post_link}}"><img src="{{memes[1].img_src}}"></a></td>
+            <td><a href="{{memes[2].post_link}}"><img src="{{memes[2].img_src}}"></a></td>
+        </tr>
+        <tr>
+            <td>{{memes[0].title}}</td>
+            <td>{{memes[1].title}}</td>
+            <td>{{memes[2].title}}</td>
+        </tr>
+
+        <tr>
+            <td><button id="{{memes[0].source}} button">I like this meme!</button></td>
+            <td><button id="{{memes[1].source}} button">I like this meme!</button></td>
+            <td><button id="{{memes[2].source}} button">I like this meme!</button></td>
+        </tr>
+    </table>
+
+</div>
+
+<script type=text/javascript>
+    var giphy_meme = { 'source': '{{ memes[0].source }}', 'title': '{{ memes[0].title }}', 'img_src': '{{ memes[0].img_src }}', 'post_link': '{{ memes[0].post_link}}'};
+    var imgur_meme = { 'source': '{{ memes[1].source }}', 'title': '{{ memes[1].title }}', 'img_src': '{{ memes[1].img_src }}', 'post_link': '{{ memes[1].post_link}}'};
+    var reddit_meme = { 'source': '{{ memes[2].source }}', 'title': '{{ memes[2].title }}', 'img_src': '{{ memes[2].img_src }}', 'post_link': '{{ memes[2].post_link}}'};
+
+    $(function() {
+        $("button").click(function(){
+            if (this.id == "{{memes[0].source}} button") {
+                $.ajax({
+                    url: '/memebox',
+                    data: giphy_meme,
+                    type: 'POST',
+                    success: function() {
+                        alert('Added to MemeBox');
+                    },
+                    error: function(error) {
+                        alert('NOT Added to MemeBox');
+                    }
+                });
+
+            }
+            else if (this.id == "{{memes[1].source}} button") {
+                $.ajax({
+                    url: '/memebox',
+                    data: imgur_meme,
+                    type: 'POST',
+                    success: function() {
+                        alert('Added to MemeBox');
+                    },
+                    error: function(error) {
+                        alert('NOT Added to MemeBox');
+                    }
+                });
+
+            }
+            else if (this.id == "{{memes[2].source}} button") {
+                $.ajax({
+                    url: '/memebox',
+                    data: reddit_meme,
+                    type: 'POST',
+                    success: function() {
+                        alert('Added to MemeBox');
+                    },
+                    error: function(error) {
+                        alert('NOT Added to MemeBox');
+                    }
+                });
+
+            }
 
 
+        });
+    });
 
-      </div>
+</script>
 
 {% endblock %}

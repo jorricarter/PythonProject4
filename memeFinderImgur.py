@@ -93,7 +93,7 @@ def create_meme_object(meme):
     return imgur_meme
 
 
-# Enable for the command line testing
-if __name__ == "__main__":
-    keyword = input('Enter a keyword to search a meme for: ')
-    get_meme(keyword, 'on')
+# # Enable for the command line testing
+# if __name__ == "__main__":
+#     keyword = input('Enter a keyword to search a meme for: ')
+#     get_meme(keyword, 'on')

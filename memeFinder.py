@@ -16,6 +16,10 @@ cache_file_name = 'cache.pickle'    # Default = cache.pickle
 cache_file_path = os.path.join(cache_folder, cache_file_name)
 fresh_period = 7    # Number of days that the meme data is considered "fresh". Default = 7 days
 
+memebox_folder = 'memebox'
+memebox_file = 'memebox.pickle'
+memebox_file_path = os.path.join(memebox_folder, memebox_file)
+
 
 # Meme class object
 class Meme:
@@ -160,6 +164,40 @@ def unpickle_data():
 
         logging.info("cache size: " + str(len(cache_data)))
         return cache_data
+
+    except FileNotFoundError as e:
+        logging.error(e)
+
+
+def save_to_memebox(meme):
+
+    # create Meme class object from dictionary
+    meme = Meme(meme['source'], meme['title'], meme['img_src'], meme['post_link'])
+
+    # create cache_folder if not available
+    try:
+        # will try to create logs folder. Doesn't raise exception even if it exists
+        os.makedirs(memebox_folder, exist_ok=True)
+    except OSError as e:
+        print(e.errno)
+
+    with open(memebox_file_path, "ab") as f:
+        pickle.dump(meme, f)
+
+
+def load_memebox():
+
+    try:
+        memes = []
+        with open(memebox_file_path, "rb") as f:
+            while True:
+                try:
+                    memes.append(pickle.load(f))
+                except EOFError:
+                    break
+
+        logging.info("MemeBox size: " + str(len(memes)))
+        return memes
 
     except FileNotFoundError as e:
         logging.error(e)
