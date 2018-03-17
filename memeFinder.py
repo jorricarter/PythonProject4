@@ -6,15 +6,17 @@ import memeFinderImgur
 import memeFinderReddit
 import random
 import logging
+import json
 
 
 log = logging.getLogger(__name__)
 
 TODAY = time.strftime("%y%m%d")  # sets today's date into yymmdd format
+fresh_period = 7    # Number of days that the meme data is considered "fresh". Default = 7 days
+
 cache_folder = 'cache'  # cache folder name. Default = cache
 cache_file_name = 'cache.pickle'    # Default = cache.pickle
 cache_file_path = os.path.join(cache_folder, cache_file_name)
-fresh_period = 7    # Number of days that the meme data is considered "fresh". Default = 7 days
 
 memebox_folder = 'memebox'
 memebox_file = 'memebox.pickle'
@@ -29,6 +31,9 @@ class Meme:
         self.img_src = img_src    # direct image link
         self.post_link = post_link  # post link
 
+    def to_json(self):
+        return json.dumps(self, default=lambda o: o.__dict__, indent=4)
+
 
 # Holds the JSON data and other info to save within the cache
 class MemeCache:
@@ -36,8 +41,11 @@ class MemeCache:
         self.keyword = keyword
         self.meme_only = meme_only
         self.source = source
-        self.data = data
-        self.date = date
+        self.data = data    # from API requeest
+        self.date = date    # date that's created
+
+    def to_json(self):
+        return json.dumps(self, default=lambda o: o.__dict__, indent=4)
 
 
 # main function to find meme with the keyword and meme_only value option
@@ -58,6 +66,9 @@ def find_meme(keyword, meme_only):
     # if cache has been refreshed, update cache
     if len(old_meme_source_list) > 0:
         pickle_data(fresh_meme_data)
+
+    for meme in memes:
+        print(meme.to_json())
 
     return memes
 
@@ -163,12 +174,14 @@ def unpickle_data():
                     break
 
         logging.info("cache size: " + str(len(cache_data)))
+        logging.info(cache_data)
         return cache_data
 
     except FileNotFoundError as e:
         logging.error(e)
 
 
+# When user clicks "I like this meme!" button, that meme will be saved onto the file
 def save_to_memebox(meme):
 
     # create Meme class object from dictionary

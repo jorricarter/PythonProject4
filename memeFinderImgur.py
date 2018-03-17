@@ -43,6 +43,8 @@ def get_meme(keyword, meme_only):
         # Search request
         memes = client.gallery_search(keyword, sort=sort, window=window, page=page)
 
+        logging.info("IMGUR memes: " + str(len(memes)))
+
         return memes
 
         # # gallery_search finds multiple images, so we pick one randomly from the list

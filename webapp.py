@@ -38,7 +38,7 @@ def meme():
 
     # values debugging
     logging.debug('keyword: ' + keyword + " --search query")
-    logging.debug('meme_only: ' + meme_only + " --on for meme only checked/ None for unchecked")
+    logging.debug('meme_only: ' + str(meme_only) + " --on for meme only checked/ None for unchecked")
 
     memes = memeFinder.find_meme(keyword, meme_only)
 
