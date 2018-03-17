@@ -1,12 +1,13 @@
 import time
 import pickle
 import os
-import memeFinderGiphy
-import memeFinderImgur
-import memeFinderReddit
 import random
 import logging
 import json
+import memeFinderGiphy
+import memeFinderImgur
+import memeFinderReddit
+from memeCache import pickle_data, unpickle_data
 
 
 log = logging.getLogger(__name__)
@@ -14,13 +15,7 @@ log = logging.getLogger(__name__)
 TODAY = time.strftime("%y%m%d")  # sets today's date into yymmdd format
 fresh_period = 7    # Number of days that the meme data is considered "fresh". Default = 7 days
 
-cache_folder = 'cache'  # cache folder name. Default = cache
-cache_file_name = 'cache.pickle'    # Default = cache.pickle
-cache_file_path = os.path.join(cache_folder, cache_file_name)
 
-memebox_folder = 'memebox'
-memebox_file = 'memebox.pickle'
-memebox_file_path = os.path.join(memebox_folder, memebox_file)
 
 
 # Meme class object
@@ -68,7 +63,7 @@ def find_meme(keyword, meme_only):
         pickle_data(fresh_meme_data)
 
     for meme in memes:
-        print(meme.to_json())
+        logging.debug("find_meme(): " + meme.to_json())
 
     return memes
 
@@ -81,6 +76,7 @@ def check_cache(keyword, meme_only):
         cache_data = unpickle_data()
     except TypeError as e:
         logging.error(e)
+        logging.error("No meme cache data")
         cache_data = None
 
     # if the MemeCache with the matching keyword, meme_only value and within the fresh period,
@@ -98,12 +94,13 @@ def check_cache(keyword, meme_only):
     old_meme_source = ['giphy', 'imgur', 'reddit']
 
     # https://stackoverflow.com/questions/9371114/check-if-list-of-objects-contain-an-object-with-a-certain-attribute-value
-    if any(x.source == "giphy" for x in fresh_meme_data):
-        old_meme_source.remove('giphy')
-    if any(x.source == "imgur" for x in fresh_meme_data):
-        old_meme_source.remove('imgur')
-    if any(x.source == "reddit" for x in fresh_meme_data):
-        old_meme_source.remove('reddit')
+    for meme in fresh_meme_data:
+        if meme.source == "giphy":
+            old_meme_source.remove("giphy")
+        elif meme.source == "imgur":
+            old_meme_source.remove("imgur")
+        elif meme.source == "reddit":
+            old_meme_source.remove("reddit")
 
     # if there are no fresh meme in the cache
     if len(old_meme_source) > 0:
@@ -147,70 +144,3 @@ def pick_meme(meme_data):
         logging.error(ie)
         logging.info("No meme data found. Creating a default Meme object")
         return Meme(meme_data.source)
-
-
-def pickle_data(cache_data):
-
-    # create cache_folder if not available
-    try:
-        # will try to create logs folder. Doesn't raise exception even if it exists
-        os.makedirs(cache_folder, exist_ok=True)
-    except OSError as e:
-        print(e.errno)
-
-    with open(cache_file_path, "ab") as f:
-        pickle.dump(cache_data, f)
-
-
-def unpickle_data():
-
-    try:
-        cache_data = []
-        with open(cache_file_path, "rb") as f:
-            while True:
-                try:
-                    cache_data.extend(pickle.load(f))
-                except EOFError:
-                    break
-
-        logging.info("cache size: " + str(len(cache_data)))
-        logging.info(cache_data)
-        return cache_data
-
-    except FileNotFoundError as e:
-        logging.error(e)
-
-
-# When user clicks "I like this meme!" button, that meme will be saved onto the file
-def save_to_memebox(meme):
-
-    # create Meme class object from dictionary
-    meme = Meme(meme['source'], meme['title'], meme['img_src'], meme['post_link'])
-
-    # create cache_folder if not available
-    try:
-        # will try to create logs folder. Doesn't raise exception even if it exists
-        os.makedirs(memebox_folder, exist_ok=True)
-    except OSError as e:
-        print(e.errno)
-
-    with open(memebox_file_path, "ab") as f:
-        pickle.dump(meme, f)
-
-
-def load_memebox():
-
-    try:
-        memes = []
-        with open(memebox_file_path, "rb") as f:
-            while True:
-                try:
-                    memes.append(pickle.load(f))
-                except EOFError:
-                    break
-
-        logging.info("MemeBox size: " + str(len(memes)))
-        return memes
-
-    except FileNotFoundError as e:
-        logging.error(e)

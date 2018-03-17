@@ -1,11 +1,12 @@
 # Flask documentation http://flask.pocoo.org/docs/0.12/
 # WTForms documentation https://wtforms.readthedocs.io/en/stable/
 
-import memeFinder
 import logging
 from flask import Flask, render_template, request, redirect, url_for
 from wtforms import Form, StringField, validators   # Flast input validator extension module
 from memeLogging import logging_setup
+from memeFinder import find_meme
+from memeCache import save_to_memebox, load_memebox
 
 
 # setup logging config
@@ -40,7 +41,7 @@ def meme():
     logging.debug('keyword: ' + keyword + " --search query")
     logging.debug('meme_only: ' + str(meme_only) + " --on for meme only checked/ None for unchecked")
 
-    memes = memeFinder.find_meme(keyword, meme_only)
+    memes = find_meme(keyword, meme_only)
 
     try:
         for meme in memes:
@@ -59,12 +60,12 @@ def memebox():
     # save a meme to MemeBox if user presses the button
     if request.method == 'POST':
         meme = request.form.to_dict()   # Meme object in dictionary form
-        memeFinder.save_to_memebox(meme)
+        save_to_memebox(meme)
         logging.info("Saved data: " + str(meme))
-        return "something"
+        return "something"  # No need to actually return useful as only gets the post when user clicks the save to memebox button
 
     else:
-        memebox_items = memeFinder.load_memebox()
+        memebox_items = load_memebox()
 
         return render_template('memebox.html', memebox_items=memebox_items)
 

@@ -32,59 +32,67 @@
 
 </div>
 
-<script type=text/javascript>
-    var giphy_meme = { 'source': '{{ memes[0].source }}', 'title': '{{ memes[0].title }}', 'img_src': '{{ memes[0].img_src }}', 'post_link': '{{ memes[0].post_link}}'};
-    var imgur_meme = { 'source': '{{ memes[1].source }}', 'title': '{{ memes[1].title }}', 'img_src': '{{ memes[1].img_src }}', 'post_link': '{{ memes[1].post_link}}'};
-    var reddit_meme = { 'source': '{{ memes[2].source }}', 'title': '{{ memes[2].title }}', 'img_src': '{{ memes[2].img_src }}', 'post_link': '{{ memes[2].post_link}}'};
+<script type="text/javascript">
 
-    $(function() {
-        $("button").click(function(){
-            if (this.id == "{{memes[0].source}} button") {
-                $.ajax({
-                    url: '/memebox',
-                    data: giphy_meme,
-                    type: 'POST',
-                    success: function() {
-                        alert('Added to MemeBox');
-                    },
-                    error: function(error) {
-                        alert('NOT Added to MemeBox');
-                    }
-                });
+//creates dictionary object to pass for saving onto MemeBox
+var giphy_meme = { 'source': '{{ memes[0].source }}', 'title': '{{ memes[0].title }}',
+    'img_src': '{{ memes[0].img_src }}', 'post_link': '{{ memes[0].post_link}}'};
+var imgur_meme = { 'source': '{{ memes[1].source }}', 'title': '{{ memes[1].title }}',
+    'img_src': '{{ memes[1].img_src }}', 'post_link': '{{ memes[1].post_link}}'};
+var reddit_meme = { 'source': '{{ memes[2].source }}', 'title': '{{ memes[2].title }}',
+    'img_src': '{{ memes[2].img_src }}', 'post_link': '{{ memes[2].post_link}}'};
 
-            }
-            else if (this.id == "{{memes[1].source}} button") {
-                $.ajax({
-                    url: '/memebox',
-                    data: imgur_meme,
-                    type: 'POST',
-                    success: function() {
-                        alert('Added to MemeBox');
-                    },
-                    error: function(error) {
-                        alert('NOT Added to MemeBox');
-                    }
-                });
+$(function() {
+    $("button").click(function(){
 
-            }
-            else if (this.id == "{{memes[2].source}} button") {
-                $.ajax({
-                    url: '/memebox',
-                    data: reddit_meme,
-                    type: 'POST',
-                    success: function() {
-                        alert('Added to MemeBox');
-                    },
-                    error: function(error) {
-                        alert('NOT Added to MemeBox');
-                    }
-                });
+        // If user presses I like it button under the giphy meme, post the giphy_meme dictionary
+        //  if it's successful, alert that it's added to memebox, otherwise, alert that it's not
+        if (this.id == "{{memes[0].source}} button") {
+            $.ajax({
+                url: '/memebox',
+                data: giphy_meme,
+                type: 'POST',
+                success: function() {
+                    alert('Added to MemeBox');
+                },
+                error: function(error) {
+                    alert('NOT Added to MemeBox');
+                }
+            });
+        }
 
-            }
+        // the same as above but for the button under the imgur meme
+        else if (this.id == "{{memes[1].source}} button") {
+            $.ajax({
+                url: '/memebox',
+                data: imgur_meme,
+                type: 'POST',
+                success: function() {
+                    alert('Added to MemeBox');
+                },
+                error: function(error) {
+                    alert('NOT Added to MemeBox');
+                }
+            });
+        }
 
+        // the same as above but for the button under the reddit meme
+        else if (this.id == "{{memes[2].source}} button") {
+            $.ajax({
+                url: '/memebox',
+                data: reddit_meme,
+                type: 'POST',
+                success: function() {
+                    alert('Added to MemeBox');
+                },
+                error: function(error) {
+                    alert('NOT Added to MemeBox');
+                }
+            });
+        }
 
-        });
     });
+});
 
 </script>
 
