@@ -16,12 +16,15 @@
         {% else %}
 
         {% for item in memebox_items %}
-
             <tr>
-                <td><a href="{{item.post_link}}"><img src="{{item.img_src}}"></a></td>
+                <td>{{ item.source|upper }}: {{ item.title }}</td>
+            </tr>
+            <tr>
+                <td id="bot_padding">
+                    <a href="{{item.post_link}}"><img src="{{item.img_src}}"></a>
 
                 {# loop.index reference https://stackoverflow.com/questions/12145434/how-to-output-loop-counter-in-python-jinja-template #}
-                <td>
+
                     <input type="submit" name='{{loop.index-1}}' value="Delete"  onclick="return confirm('Do you really want to delete this dank meme???')" />
                 </td>
             </tr>

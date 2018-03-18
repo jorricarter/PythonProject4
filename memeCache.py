@@ -1,4 +1,4 @@
-import pickle
+import _pickle
 import os
 import logging
 
@@ -30,7 +30,7 @@ def pickle_data(cache_data):
         print(e.errno)
 
     with open(cache_file_path, "ab") as f:
-        pickle.dump(cache_data, f)
+        _pickle.dump(cache_data, f)
 
 
 # unpickles cache data
@@ -41,7 +41,7 @@ def unpickle_data():
         with open(cache_file_path, "rb") as f:
             while True:
                 try:
-                    cache_data.extend(pickle.load(f))
+                    cache_data.extend(_pickle.load(f))
                 except EOFError:
                     break
 
@@ -70,7 +70,7 @@ def save_to_memebox(meme_dict):
         print(e.errno)
 
     with open(memebox_file_path, "ab") as f:
-        pickle.dump(meme, f)
+        _pickle.dump(meme, f)
 
 
 # loads MemeBox data
@@ -82,7 +82,7 @@ def load_memebox():
             while True:
                 try:
                     # load the initial load into temp_load for if statement
-                    temp_load = pickle.load(f)
+                    temp_load = _pickle.load(f)
                     # if temp_load is instance of list, extend the memes list
                     #   else, it's a Meme object, so we append to the memes list
                     if isinstance(temp_load, list):
@@ -104,7 +104,6 @@ def load_memebox():
 
 # When user clicks delete button from the MemeBox, delete the meme from the list/MemeBox
 def delete_meme(index):
-
     memes = load_memebox()
 
     del memes[index]
@@ -114,6 +113,6 @@ def delete_meme(index):
 
     # overwrite the file with the meme-deleted list
     with open(memebox_file_path, "wb") as f:
-        pickle.dump(memes, f)
+        _pickle.dump(memes, f)
 
 

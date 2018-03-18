@@ -19,3 +19,7 @@ img{
     text-align: center;
     text-transform: uppercase;
 }
+
+#bot_padding{
+    padding-bottom: 40px;
+}

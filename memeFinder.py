@@ -16,8 +16,6 @@ TODAY = time.strftime("%y%m%d")  # sets today's date into yymmdd format
 fresh_period = 7    # Number of days that the meme data is considered "fresh". Default = 7 days
 
 
-
-
 # Meme class object
 class Meme:
     def __init__(self, source, title="No results", img_src="", post_link="/"):
@@ -144,3 +142,11 @@ def pick_meme(meme_data):
         logging.error(ie)
         logging.info("No meme data found. Creating a default Meme object")
         return Meme(meme_data.source)
+
+
+def convert_meme_object_to_dict(memes):
+    meme_dict = []
+    for meme in memes:
+        meme_dict.append({'source': meme.source, 'title': meme.title, 'img_src': meme.img_src, 'post_link': meme.post_link})
+
+    return meme_dict
