@@ -75,6 +75,7 @@ def save_to_memebox(meme_dict):
 
 # loads MemeBox data
 def load_memebox():
+    from memeFinder import Meme
 
     try:
         memes = []
@@ -93,9 +94,13 @@ def load_memebox():
                 # if it's end of the file, break the loop
                 except EOFError:
                     break
-
+        for meme in memes:
+            print(meme.to_json())
         logging.info("MemeBox size: " + str(len(memes)))
         memes.reverse()  # make sure the latest meme comes on top
+
+        memes = fix_annoying_amps(memes)
+
         return memes
 
     except FileNotFoundError as e:
@@ -114,5 +119,23 @@ def delete_meme(index):
     # overwrite the file with the meme-deleted list
     with open(memebox_file_path, "wb") as f:
         _pickle.dump(memes, f)
+
+
+# fix the annoying en/decoding issue with amps/ASCII
+def fix_annoying_amps(memes):
+
+    # extracts the titles from the memes list to work with
+    title_list = list(map(lambda meme: meme.title, memes))
+
+    # replaces annoying &#34; and &#39; from the title list
+    first = list(map(lambda title: title.replace("&#39;", "'"), title_list))
+    title_list = list(map(lambda title: title.replace("&#34;", "\""), first))
+
+    # update the title with the fixed title
+    for x in range(len(memes)):
+        memes[x].title = title_list[x]
+
+    # returns fixed memes list
+    return memes
 
 
