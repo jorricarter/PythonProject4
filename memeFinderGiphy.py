@@ -36,22 +36,6 @@ def get_meme(keyword, meme_only):
 
         return json_data['data']
 
-        # # randomly picks one meme from the json_data (25 by default)
-        # meme = random.choice(json_data['data'])
-        #
-        # # meme post title
-        # title = meme['title']
-        #
-        # # Gets the downsized img url from the api_response
-        # img_src = meme['images']['downsized']['url']
-        #
-        # # For <a href...> link
-        # post_link = meme['embed_url']
-        #
-        # giphy_meme = Meme('giphy', title, img_src, post_link)
-        #
-        # return giphy_meme
-
     except KeyError as ke:  # if there are no environment variable setup/found for GIPHY_KEY
         logging.error(ke)
 
@@ -63,10 +47,6 @@ def get_meme(keyword, meme_only):
 
     except ValueError as ve:  # if no json data is found during requests.get
         logging.error(ve)
-
-    # except IndexError as ie:  # if search didn't find any result with tht keyword
-    #     logging.error(ie)
-    #     return Meme('giphy')
 
 
 def create_meme_object(meme):

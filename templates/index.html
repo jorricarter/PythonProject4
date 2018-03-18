@@ -2,7 +2,7 @@
 {% block content %}
 
     <div class="container">
-        <form name="keyword_form" action="{{ url_for('meme') }}" method="POST">
+        <form name="keyword_form" method="POST">
             Keyword <input type="text" name="keyword">
             <input type="submit" value="Get meme!">
             <input type="checkbox" name="meme_only" checked> meme only

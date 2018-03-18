@@ -4,7 +4,7 @@
 
 <div id="memes" class="container">
 
-    <h1>{{keyword}}</h1>
+    <h1>{{ keyword|upper }}</h1>
 
     <table>
         <tr>
@@ -60,7 +60,7 @@ $(function() {
 
             if (giphy_button_clicked === false) {
                 $.ajax({
-                    url: '/memebox',
+                    url: '/meme',
                     data: giphy_meme,
                     type: 'POST',
                     success: function() {
@@ -84,7 +84,7 @@ $(function() {
 
             if (imgur_button_clicked === false) {
                 $.ajax({
-                    url: '/memebox',
+                    url: '/meme',
                     data: imgur_meme,
                     type: 'POST',
                     success: function() {
@@ -108,7 +108,7 @@ $(function() {
 
             if (reddit_button_clicked === false) {
                 $.ajax({
-                    url: '/memebox',
+                    url: '/meme',
                     data: reddit_meme,
                     type: 'POST',
                     success: function() {

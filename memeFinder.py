@@ -43,6 +43,8 @@ class MemeCache:
 # main function to find meme with the keyword and meme_only value option
 def find_meme(keyword, meme_only):
 
+    logging.info("Looking for dank memes for keyword:{} meme_only:{}".format(keyword, str(meme_only)))
+
     # for speed comparison. Remove before production/release
     threading_speed_test_on = False  # switch to True is you want to test yourself
     if threading_speed_test_on:
