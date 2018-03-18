@@ -27,7 +27,7 @@ def pickle_data(cache_data):
         # will try to create logs folder. Doesn't raise exception even if it exists
         os.makedirs(cache_folder, exist_ok=True)
     except OSError as e:
-        print(e.errno)
+        logging.error(e.errno)
 
     with open(cache_file_path, "ab") as f:
         _pickle.dump(cache_data, f)
@@ -67,7 +67,7 @@ def save_to_memebox(meme_dict):
         # will try to create logs folder. Doesn't raise exception even if it exists
         os.makedirs(memebox_folder, exist_ok=True)
     except OSError as e:
-        print(e.errno)
+        logging.error(e.errno)
 
     with open(memebox_file_path, "ab") as f:
         _pickle.dump(meme, f)
@@ -94,8 +94,7 @@ def load_memebox():
                 # if it's end of the file, break the loop
                 except EOFError:
                     break
-        for meme in memes:
-            print(meme.to_json())
+
         logging.info("MemeBox size: " + str(len(memes)))
         memes.reverse()  # make sure the latest meme comes on top
 

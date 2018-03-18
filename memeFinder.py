@@ -59,6 +59,8 @@ def find_meme(keyword, meme_only):
     # if cache has been refreshed, update cache
     if len(old_meme_source_list) > 0:
         pickle_data(fresh_meme_data)
+    else:
+        logging.info("Pulling (keyword:{} meme_only:{}) search results from cache".format(keyword, str(meme_only)))
 
     for meme in memes:
         logging.debug("find_meme(): " + meme.to_json())

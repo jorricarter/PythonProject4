@@ -55,7 +55,7 @@ def make_logging_folder():
         return log_config_file
 
     except OSError as e:
-        print(e.errno)
+        logging.error(e.errno)
 
 
 def logging_setup():
