@@ -127,8 +127,11 @@ def fix_annoying_amps(memes):
     title_list = list(map(lambda meme: meme.title, memes))
 
     # replaces annoying &#34; and &#39; from the title list
-    first = list(map(lambda title: title.replace("&#39;", "'"), title_list))
-    title_list = list(map(lambda title: title.replace("&#34;", "\""), first))
+    replace_single_quote = list(map(lambda title: title.replace("&#39;", "'"), title_list))
+    replace_double_quote = list(map(lambda title: title.replace("&#34;", "\""), replace_single_quote))
+    replace_blank = list(map(lambda title: title.replace("\xa0", "NO TITLE"), replace_double_quote))
+
+    title_list = replace_blank
 
     # update the title with the fixed title
     for x in range(len(memes)):

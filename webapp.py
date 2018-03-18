@@ -46,10 +46,12 @@ def meme():
     try:
         for meme in memes:
             # logging the meme data
-            logging.debug("{}: title:{} img:{} link:{}".format(meme.source.upper(), meme.title, meme.img_src, meme.post_link))
+            logging.debug("{}: title:{} img:{} link:{}".format(meme.source.upper(), str(meme.title), meme.img_src, meme.post_link))
 
     except AttributeError as ae:
         logging.error(ae)
+    except UnicodeEncodeError as ue:
+        logging.error(ue)
 
     return render_template('meme.html', keyword=keyword, memes=memes)
 
