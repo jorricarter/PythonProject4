@@ -71,7 +71,7 @@ def check_cache(keyword, meme_only):
     fresh_meme_data = []
     try:
         for cache in cache_data:
-            if cache.keyword == keyword and cache.meme_only == meme_only and int(cache.date) + fresh_period >= int(TODAY):
+            if cache.keyword == keyword and cache.meme_only == meme_only and int(cache.date) < int(TODAY) + fresh_period:
                 fresh_meme_data.append(cache)
     except TypeError as e:
         logging.error(e)
@@ -119,7 +119,7 @@ def save_to_memebox(meme_dict):
 
 # loads MemeBox data
 def load_memebox():
-    from memeFinder import Meme
+    from memeFinder import fix_annoying_amps
 
     try:
         memes = []
