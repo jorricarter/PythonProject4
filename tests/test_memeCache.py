@@ -37,8 +37,8 @@ class TestMemeCacheModule(TestCase):
     # Tests if check_cache() will return fresh cache only
     def test_check_cache_fresh_period(self):
 
-        expired = int(memeCache.TODAY) + memeCache.fresh_period   # today+fresh_period, which makes it expired
-        still_okay = int(memeCache.TODAY) + (memeCache.fresh_period -1)   # today+fresh_period-1, which makes it still fresh enough
+        expired = int(memeCache.TODAY) - memeCache.fresh_period   # today+fresh_period, which makes it expired
+        still_okay = int(memeCache.TODAY) - (memeCache.fresh_period -1)   # today+fresh_period-1, which makes it still fresh enough
 
         # create a test MemeCache object and create an object list
         test_memecache_fresh = MemeCache('cat', True, 'source', 'freshdata', memeCache.TODAY)

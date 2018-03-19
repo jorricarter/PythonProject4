@@ -63,15 +63,13 @@ def find_meme(keyword, meme_only):
         logging.info("Pulling (keyword:{} meme_only:{}) search results from cache".format(keyword, str(meme_only)))
 
     # picks one meme from each source
-    memes = []
-    for meme_data in fresh_meme_data:
-        memes.append(pick_meme(meme_data))
+    memes = [pick_meme(next(meme_data for meme_data in fresh_meme_data if meme_data.source == 'giphy')),
+             pick_meme(next(meme_data for meme_data in fresh_meme_data if meme_data.source == 'imgur')),
+             pick_meme(next(meme_data for meme_data in fresh_meme_data if meme_data.source == 'reddit'))]
 
     # debug purposes to see the memes
     for meme in memes:
         logging.debug("find_meme(): " + meme.to_json())
-
-    fix_annoying_amps(memes)
 
     return memes
 

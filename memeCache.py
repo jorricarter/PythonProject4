@@ -66,12 +66,15 @@ def check_cache(keyword, meme_only):
         logging.error("No meme cache data")
         cache_data = None
 
+    # delete expired=today-fresh_period memeCache data
+    delete_old_cache(cache_data)
+
     # if the MemeCache with the matching keyword, meme_only value and within the fresh period,
     #   add to fresh_meme_data list
     fresh_meme_data = []
     try:
         for cache in cache_data:
-            if cache.keyword == keyword and cache.meme_only == meme_only and int(cache.date) < int(TODAY) + fresh_period:
+            if cache.keyword == keyword and cache.meme_only == meme_only:
                 fresh_meme_data.append(cache)
     except TypeError as e:
         logging.error(e)
@@ -94,6 +97,27 @@ def check_cache(keyword, meme_only):
         logging.info("Could not find fresh cache from: " + str(old_meme_source))
 
     return fresh_meme_data, old_meme_source
+
+
+# delete expired cache to reduce cache size
+def delete_old_cache(cache_data):
+
+    try:
+        # remove from the cache_data if it has expired
+        for cache in cache_data:
+            if int(cache.date) + fresh_period <= int(TODAY):
+                cache_data.remove(cache)
+
+        # if there were cache_data originally, overwrite cache data with the new cache data without expired data
+        if len(cache_data) is not None:
+            with open(cache_file_path, "wb") as f:
+                _pickle.dump(cache_data, f)
+
+    except TypeError as e:
+        logging.error(e)
+        logging.error("No cache data")
+
+    return cache_data
 
 
 # MemeBox ###########################################################################################################
