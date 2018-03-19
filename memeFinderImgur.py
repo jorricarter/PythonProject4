@@ -47,32 +47,9 @@ def get_meme(keyword, meme_only):
 
         return memes
 
-        # # gallery_search finds multiple images, so we pick one randomly from the list
-        # meme = random.choice(memes)
-        #
-        # title = meme.title
-        #
-        # # checks if meme is a GalleryAlbum object
-        # #   necessary because the search finds both GalleryAlbum objects and GalleryImage objects, both of which
-        # #   has different data structure.
-        # if type(meme) is GalleryAlbum:
-        #     img_src = meme.images[0]['link']  # img source
-        # else:
-        #     img_src = meme.link
-        #
-        # post_link = meme.link # img page
-        #
-        # imgur_meme = Meme('imgur', title, img_src, post_link)
-        #
-        # return imgur_meme
-
     except ImgurClientError as e:
         logging.error(e.error_message)
         logging.error(e.status_code)
-
-    # except IndexError as ie:
-    #     logging.error(ie)
-    #     return Meme('imgur')
 
 
 def create_meme_object(meme):
