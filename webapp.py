@@ -2,8 +2,8 @@
 # WTForms documentation https://wtforms.readthedocs.io/en/stable/
 
 import logging
-from flask import Flask, render_template, request, redirect, url_for
-from wtforms import Form, StringField, BooleanField, validators   # Flast input validator extension module
+from flask import Flask, render_template, request
+from wtforms import Form, StringField, BooleanField, validators   # Flask input validator extension module
 from memeLogging import logging_setup
 from memeFinder import find_meme
 from memeCache import save_to_memebox, load_memebox, delete_meme
@@ -16,7 +16,7 @@ app = Flask(__name__)
 
 
 class MemeSearchForm(Form):
-    keyword = StringField('keyword', [validators.Length(min=1, max=30)])    # validate if user has enter a character
+    keyword = StringField('keyword', [validators.Length(min=1, max=30)])    # validate input to be 1-30 characters long
     meme_only = BooleanField('meme_only')
 
 

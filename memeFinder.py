@@ -6,16 +6,16 @@ import memeFinderGiphy
 import memeFinderImgur
 import memeFinderReddit
 import concurrent.futures
-from memeCache import pickle_data, unpickle_data, fix_annoying_amps
+from memeCache import pickle_data, check_cache, TODAY
 
 
+# turn on logging
 log = logging.getLogger(__name__)
 
-TODAY = time.strftime("%y%m%d")  # sets today's date into yymmdd format
-fresh_period = 7    # Number of days that the meme data is considered "fresh". Default = 7 days
 
+# Objects ##########################################################################################################
 
-# Meme class object
+# Meme class object:
 class Meme:
     def __init__(self, source, title="No results", img_src="", post_link="/"):
         self.source = source    # where it originated from (giphy/imgur/reddit)
@@ -40,13 +40,15 @@ class MemeCache:
         return json.dumps(self, default=lambda o: o.__dict__, indent=4)
 
 
+# Functions #######################################################################################################
+
 # main function to find meme with the keyword and meme_only value option
 def find_meme(keyword, meme_only):
 
     logging.info("Looking for dank memes for keyword:{} meme_only:{}".format(keyword, str(meme_only)))
 
-    # for speed comparison. Remove before production/release
-    threading_speed_test_on = False  # switch to True is you want to test yourself
+    # Speed comparison test.
+    threading_speed_test_on = False  # switch to True is you want to test. WARNING: switch back to False after testing.
     if threading_speed_test_on:
         test_api_call_speed_with_threading_and_without_threading()
 
@@ -74,45 +76,24 @@ def find_meme(keyword, meme_only):
     return memes
 
 
-# Checks if cache has the fresh meme data with the matching keyword, meme_only value
-def check_cache(keyword, meme_only):
+# Make API request calls to get new meme data if there are no fresh memes from the list
+def get_fresh_memes(fresh_meme_data, old_meme_source_list, keyword, meme_only):
+    num_threads = 3  # Number of threads to run in parallel
 
-    # unpickles cache file
-    try:
-        cache_data = unpickle_data()
-    except TypeError as e:
-        logging.error(e)
-        logging.error("No meme cache data")
-        cache_data = None
+    start_time = time.time()    # start timer
 
-    # if the MemeCache with the matching keyword, meme_only value and within the fresh period,
-    #   add to fresh_meme_data list
-    fresh_meme_data = []
-    try:
-        for cache in cache_data:
-            if cache.keyword == keyword and cache.meme_only == meme_only and int(cache.date) + fresh_period >= int(TODAY):
-                fresh_meme_data.append(cache)
-    except TypeError as e:
-        logging.error(e)
-        logging.error("No fresh memes")
+    # Concurrent execution
+    with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
+        futures = {executor.submit(
+            fresh_meme_data.append(api_call(keyword, meme_only, source))
+        ) for source in old_meme_source_list}
+        concurrent.futures.wait(futures)
 
-    # add to old_meme_source_list if there are no fresh meme data from that source
-    old_meme_source = ['giphy', 'imgur', 'reddit']
+    end_time = time.time()  # end timer
 
-    # https://stackoverflow.com/questions/9371114/check-if-list-of-objects-contain-an-object-with-a-certain-attribute-value
-    for meme in fresh_meme_data:
-        if meme.source == "giphy":
-            old_meme_source.remove("giphy")
-        elif meme.source == "imgur":
-            old_meme_source.remove("imgur")
-        elif meme.source == "reddit":
-            old_meme_source.remove("reddit")
+    logging.info("Execution time: %s" % (end_time - start_time))
 
-    # if there are no fresh meme in the cache
-    if len(old_meme_source) > 0:
-        logging.info("Could not find fresh cache from: " + str(old_meme_source))
-
-    return fresh_meme_data, old_meme_source
+    return fresh_meme_data
 
 
 # If there are no fresh meme found on cache, get a new meme data from the appropriate source
@@ -152,25 +133,28 @@ def pick_meme(meme_data):
         return Meme(meme_data.source)
 
 
-# Make API request calls to get new meme data if there are no fresh memes from the list
-def get_fresh_memes(fresh_meme_data, old_meme_source_list, keyword, meme_only):
-    num_threads = 3  # Number of threads to run in parallel
+# fix the annoying en/decoding issue with amps/ASCII
+def fix_annoying_amps(memes):
 
-    start_time = time.time()    # start timer
+    # extracts the titles from the memes list to work with
+    title_list = list(map(lambda meme: meme.title, memes))
 
-    # Concurrent execution
-    with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
-        futures = {executor.submit(
-            fresh_meme_data.append(api_call(keyword, meme_only, source))
-        ) for source in old_meme_source_list}
-        concurrent.futures.wait(futures)
+    # replaces annoying &#34; and &#39; from the title list
+    replace_single_quote = list(map(lambda title: title.replace("&#39;", "'"), title_list))
+    replace_double_quote = list(map(lambda title: title.replace("&#34;", "\""), replace_single_quote))
+    replace_blank = list(map(lambda title: title.replace("\xa0", "NO TITLE"), replace_double_quote))
 
-    end_time = time.time()  # end timer
+    title_list = replace_blank
 
-    logging.info("Execution time: %s" % (end_time - start_time))
+    # update the title with the fixed title
+    for x in range(len(memes)):
+        memes[x].title = title_list[x]
 
-    return fresh_meme_data
+    # returns fixed memes list
+    return memes
 
+
+# Testing Functions ################################################################################################
 
 # for testing purposes. No need for the actual production
 def test_api_call_speed_with_threading_and_without_threading():
@@ -251,4 +235,3 @@ def convert_meme_object_to_dict(memes):
         meme_dict.append({'source': meme.source, 'title': meme.title, 'img_src': meme.img_src, 'post_link': meme.post_link})
 
     return meme_dict
-

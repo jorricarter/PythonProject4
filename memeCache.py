@@ -1,6 +1,7 @@
 import _pickle
 import os
 import logging
+import time
 
 
 # Path setting ######################################################################################################
@@ -18,6 +19,8 @@ memebox_file_path = os.path.join(memebox_folder, memebox_file)
 
 # Cache #############################################################################################################
 
+TODAY = time.strftime("%y%m%d")  # sets today's date into yymmdd format
+fresh_period = 7    # Number of days that the meme data is considered "fresh". Default = 7 days
 
 # pickles MemeCache lists for caching data
 def pickle_data(cache_data):
@@ -50,6 +53,47 @@ def unpickle_data():
 
     except FileNotFoundError as e:
         logging.error(e)
+
+
+# Checks if cache has the fresh meme data with the matching keyword, meme_only value
+def check_cache(keyword, meme_only):
+
+    # unpickles cache file
+    try:
+        cache_data = unpickle_data()
+    except TypeError as e:
+        logging.error(e)
+        logging.error("No meme cache data")
+        cache_data = None
+
+    # if the MemeCache with the matching keyword, meme_only value and within the fresh period,
+    #   add to fresh_meme_data list
+    fresh_meme_data = []
+    try:
+        for cache in cache_data:
+            if cache.keyword == keyword and cache.meme_only == meme_only and int(cache.date) + fresh_period >= int(TODAY):
+                fresh_meme_data.append(cache)
+    except TypeError as e:
+        logging.error(e)
+        logging.error("No fresh memes")
+
+    # add to old_meme_source_list if there are no fresh meme data from that source
+    old_meme_source = ['giphy', 'imgur', 'reddit']
+
+    # https://stackoverflow.com/questions/9371114/check-if-list-of-objects-contain-an-object-with-a-certain-attribute-value
+    for meme in fresh_meme_data:
+        if meme.source == "giphy":
+            old_meme_source.remove("giphy")
+        elif meme.source == "imgur":
+            old_meme_source.remove("imgur")
+        elif meme.source == "reddit":
+            old_meme_source.remove("reddit")
+
+    # if there are no fresh meme in the cache
+    if len(old_meme_source) > 0:
+        logging.info("Could not find fresh cache from: " + str(old_meme_source))
+
+    return fresh_meme_data, old_meme_source
 
 
 # MemeBox ###########################################################################################################
@@ -118,26 +162,3 @@ def delete_meme(index):
     # overwrite the file with the meme-deleted list
     with open(memebox_file_path, "wb") as f:
         _pickle.dump(memes, f)
-
-
-# fix the annoying en/decoding issue with amps/ASCII
-def fix_annoying_amps(memes):
-
-    # extracts the titles from the memes list to work with
-    title_list = list(map(lambda meme: meme.title, memes))
-
-    # replaces annoying &#34; and &#39; from the title list
-    replace_single_quote = list(map(lambda title: title.replace("&#39;", "'"), title_list))
-    replace_double_quote = list(map(lambda title: title.replace("&#34;", "\""), replace_single_quote))
-    replace_blank = list(map(lambda title: title.replace("\xa0", "NO TITLE"), replace_double_quote))
-
-    title_list = replace_blank
-
-    # update the title with the fixed title
-    for x in range(len(memes)):
-        memes[x].title = title_list[x]
-
-    # returns fixed memes list
-    return memes
-
-
