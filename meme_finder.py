@@ -2,11 +2,11 @@ import time
 import random
 import logging
 import json
-import memeFinderGiphy
-import memeFinderImgur
-import memeFinderReddit
+import meme_finder_giphy
+import meme_finder_imgur
+import meme_finder_reddit
 import concurrent.futures
-from memeCache import pickle_data, check_cache, TODAY
+from meme_cache import pickle_data, check_cache, TODAY
 
 
 # turn on logging
@@ -101,11 +101,11 @@ def get_fresh_memes(fresh_meme_data, old_meme_source_list, keyword, meme_only):
 def api_call(keyword, meme_only, source):
 
     if source == 'giphy':
-        meme_data = memeFinderGiphy.get_meme(keyword, meme_only)
+        meme_data = meme_finder_giphy.get_meme(keyword, meme_only)
     elif source == 'imgur':
-        meme_data = memeFinderImgur.get_meme(keyword, meme_only)
+        meme_data = meme_finder_imgur.get_meme(keyword, meme_only)
     else:
-        meme_data = memeFinderReddit.get_meme(keyword, meme_only)
+        meme_data = meme_finder_reddit.get_meme(keyword, meme_only)
 
     # create a MemeCache object with the new meme_data
     fresh_meme_cache = MemeCache(keyword, meme_only, source, meme_data)
@@ -120,13 +120,13 @@ def pick_meme(meme_data):
         meme = random.choice(meme_data.data)
 
         if meme_data.source == 'giphy':
-            return memeFinderGiphy.create_meme_object(meme)
+            return meme_finder_giphy.create_meme_object(meme)
 
         elif meme_data.source == 'imgur':
-            return memeFinderImgur.create_meme_object(meme)
+            return meme_finder_imgur.create_meme_object(meme)
 
         else:
-            return memeFinderReddit.create_meme_object(meme)
+            return meme_finder_reddit.create_meme_object(meme)
 
     except IndexError as ie:  # if search didn't find any result with tht keyword, return default Meme with it
         logging.error(ie)

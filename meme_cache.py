@@ -43,7 +43,8 @@ def unpickle_data():
         with open(cache_file_path, "rb") as f:
             while True:
                 try:
-                    cache_data.extend(_pickle.load(f))
+                    temp_data = _pickle.load(f)
+                    cache_data.extend(temp_data)
                 except EOFError:
                     break
 
@@ -125,7 +126,7 @@ def delete_old_cache(cache_data):
 
 # When user clicks "I like this meme!" button, that meme will be saved onto the file
 def save_to_memebox(meme_dict):
-    from memeFinder import Meme
+    from meme_finder import Meme
 
     # create Meme class object from dictionary
     meme = Meme(meme_dict['source'], meme_dict['title'], meme_dict['img_src'], meme_dict['post_link'])
@@ -143,7 +144,7 @@ def save_to_memebox(meme_dict):
 
 # loads MemeBox data
 def load_memebox():
-    from memeFinder import fix_annoying_amps
+    from meme_finder import fix_annoying_amps
 
     try:
         memes = []

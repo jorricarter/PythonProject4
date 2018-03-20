@@ -4,9 +4,9 @@
 import logging
 from flask import Flask, render_template, request
 from wtforms import Form, StringField, BooleanField, validators   # Flask input validator extension module
-from memeLogging import logging_setup
-from memeFinder import find_meme
-from memeCache import save_to_memebox, load_memebox, delete_meme
+from meme_logging import logging_setup
+from meme_finder import find_meme
+from meme_cache import save_to_memebox, load_memebox, delete_meme
 
 
 # setup logging config

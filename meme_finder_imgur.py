@@ -53,7 +53,7 @@ def get_meme(keyword, meme_only):
 
 
 def create_meme_object(meme):
-    from memeFinder import Meme
+    from meme_finder import Meme
 
     title = meme.title
 
