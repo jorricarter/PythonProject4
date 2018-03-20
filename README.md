@@ -22,9 +22,9 @@ Install requirments
 
     pip install -r requirements.txt
 
-Configure environment variables
+Install secrets.py module into the root folder
 
-    Set envar. Need to research for the best practice
+    file will be included during submission
 
 Run app
 
@@ -33,7 +33,7 @@ Run app
 App should be at 127.0.0.1:5000
 For testing
 
-    python -m tests.... something like this
+    python -m unittest backEndTest.py
 
 # Features
 
@@ -41,10 +41,10 @@ For testing
 - Option to turn on off "meme only" for searching. On by default
 
 ### Meme
-- something something
+- I like this meme! button will save that meme to MemeBox
 
 ### MemeBox
-- displays blah
+- displays saved memes
 - Confirms before deleting meme
 
 ### ETC
@@ -68,19 +68,13 @@ For testing
         |- layout.html
         |- meme.html
         |- memebox.html
-    |- tests : app testing module folder
-        |- test_memeFinder.py
-        |- test_memeFinderGiphy.py
-        |- test_memeFinderImgur.py
-        |- test_memeFinderReddit.py
-        |- test_memeLogging.py
-        |- test_webapp.py
-    |- memeCache.py
-    |- memeFinder.py
-    |- memeFinderGiphy.py
-    |- memeFinderImgur.py
-    |- memeFinderReddit.py
-    |- memeLogging.py
+    |- backEndTest.py : unittest module for testing back ends
+    |- memeCache.py : responsible for handling cache/MemeBox file I/O as well as cache verification/expired cache deletion
+    |- memeFinder.py : master API module. Also handles cache/meme data for display
+    |- memeFinderGiphy.py : GIPHY API module. API requests and create Meme objects
+    |- memeFinderImgur.py : IMGUR API module. API requests and create Meme objects. Uses imgurpython for API calls
+    |- memeFinderReddit.py : REDDIT API module. API requests and create Meme objects. Uses praw for API calls
+    |- memeLogging.py : logging setup module
     |- requirements.txt : required module lists
     |- webapp.py : main program
 
