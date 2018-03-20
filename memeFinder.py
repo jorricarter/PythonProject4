@@ -62,17 +62,20 @@ def find_meme(keyword, meme_only):
     else:
         logging.info("Pulling (keyword:{} meme_only:{}) search results from cache".format(keyword, str(meme_only)))
 
-    # picks one meme from each source
-    memes = [pick_meme(next(meme_data for meme_data in fresh_meme_data if meme_data.source == 'giphy')),
-             pick_meme(next(meme_data for meme_data in fresh_meme_data if meme_data.source == 'imgur')),
-             pick_meme(next(meme_data for meme_data in fresh_meme_data if meme_data.source == 'reddit'))]
+    try:
+        # picks one meme from each source and adds onto the memes list
+        memes = [pick_meme(next(meme_data for meme_data in fresh_meme_data if meme_data.source == 'giphy')),
+                 pick_meme(next(meme_data for meme_data in fresh_meme_data if meme_data.source == 'imgur')),
+                 pick_meme(next(meme_data for meme_data in fresh_meme_data if meme_data.source == 'reddit'))]
 
-    # debug purposes to see the memes
-    for meme in memes:
-        logging.debug("find_meme(): " + meme.to_json())
+        # debug purposes to see the memes
+        for meme in memes:
+            logging.debug("find_meme(): " + meme.to_json())
 
-    return memes
+        return memes
 
+    except TypeError:
+        logging.error("No meme datas")
 
 # Make API request calls to get new meme data if there are no fresh memes from the list
 def get_fresh_memes(fresh_meme_data, old_meme_source_list, keyword, meme_only):
@@ -125,7 +128,7 @@ def pick_meme(meme_data):
         else:
             return memeFinderReddit.create_meme_object(meme)
 
-    except IndexError as ie:  # if search didn't find any result with tht keyword
+    except IndexError as ie:  # if search didn't find any result with tht keyword, return default Meme with it
         logging.error(ie)
         logging.info("No meme data found. Creating a default Meme object")
         return Meme(meme_data.source)

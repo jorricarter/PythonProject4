@@ -24,7 +24,6 @@ fresh_period = 7    # Number of days that the meme data is considered "fresh". D
 
 # pickles MemeCache lists for caching data
 def pickle_data(cache_data):
-
     # create cache_folder if not available
     try:
         # will try to create logs folder. Doesn't raise exception even if it exists
@@ -32,13 +31,13 @@ def pickle_data(cache_data):
     except OSError as e:
         logging.error(e.errno)
 
-    with open(cache_file_path, "ab") as f:
-        _pickle.dump(cache_data, f)
+    if cache_data is not None:
+        with open(cache_file_path, "ab") as f:
+            _pickle.dump(cache_data, f)
 
 
 # unpickles cache data
 def unpickle_data():
-
     try:
         cache_data = []
         with open(cache_file_path, "rb") as f:
@@ -48,7 +47,8 @@ def unpickle_data():
                 except EOFError:
                     break
 
-        logging.info("cache size: " + str(int(len(cache_data)/3)) + " set(s)") # one set=keyword is consist of 3 api sources
+        logging.info(
+            "cache size: " + str(int(len(cache_data) / 3)) + " set(s)")  # one set=keyword is consist of 3 api sources
         return cache_data
 
     except FileNotFoundError as e:

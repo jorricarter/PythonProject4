@@ -1,11 +1,10 @@
 # GIPHY API documents https://developers.giphy.com/docs/
 # GIPHY Python client document https://github.com/Giphy/giphy-python-client !!!ditched it because it doesn't get title key
 
+from secrets import GIPHY_KEY
 import requests
-import os
 import logging
 from urllib import parse
-
 
 
 # logging setup
@@ -19,7 +18,7 @@ def get_meme(keyword, meme_only):
 
     try:
         base_api = "http://api.giphy.com/v1/gifs/search?"  # base api url for search
-        api_key = os.environ['GIPHY_KEY']  # key as environment variable
+        api_key = GIPHY_KEY  # key from the secrets module
         limit = 25  # The maximum number of records to return
 
         # if meme only checkbox is checked, append the word 'meme'

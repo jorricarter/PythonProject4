@@ -1,7 +1,7 @@
 # imgur api docs https://apidocs.imgur.com/
 # imgur python library https://github.com/Imgur/imgurpython
 
-import os
+from secrets import IMGUR_ID, IMGUR_SECRET
 from imgurpython import ImgurClient
 from imgurpython.helpers.error import ImgurClientError
 from imgurpython.imgur.models.gallery_album import GalleryAlbum
@@ -18,8 +18,8 @@ def get_meme(keyword, meme_only):
     logging.info("Accessing IMGUR API")
 
     # create api instance
-    client_id = os.environ['IMGUR_ID']
-    client_secret = os.environ['IMGUR_SECRET']
+    client_id = IMGUR_ID
+    client_secret = IMGUR_SECRET
     client = ImgurClient(client_id, client_secret)
 
     # client authorization debug

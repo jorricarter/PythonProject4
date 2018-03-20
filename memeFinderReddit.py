@@ -1,8 +1,8 @@
 # reddit api documentation https://www.reddit.com/dev/api/
 # PRAW documentation https://praw.readthedocs.io/en/latest/
 
+from secrets import REDDIT_ID, REDDIT_SECRET
 import praw
-import os
 import logging
 from praw.exceptions import APIException, ClientException, PRAWException
 
@@ -16,8 +16,8 @@ def get_meme(keyword, meme_only):
     logging.info("Accessing REDDIT API")
 
     # create api instance
-    client_id = os.environ['REDDIT_ID']
-    client_secret = os.environ['REDDIT_SECRET']
+    client_id = REDDIT_ID
+    client_secret = REDDIT_SECRET
 
     reddit = praw.Reddit(client_id=client_id,
                          client_secret=client_secret,
@@ -53,16 +53,6 @@ def get_meme(keyword, meme_only):
                 memes.append({'title': submission.title, 'url': submission.url, 'shortlink': submission.shortlink})
 
         return memes
-        # # Pick one meme randomly from the list
-        # meme = random.choice(memes)
-        #
-        # title = meme['title']   # post title
-        # imc_src = meme['url']  # img src
-        # post_link = meme['shortlink']   # reddit post link
-        #
-        # reddit_meme = Meme('reddit', title, imc_src, post_link)
-        #
-        # return reddit_meme
 
     # http://praw.readthedocs.io/en/latest/code_overview/exceptions.html#praw.exceptions.APIException
     except APIException as e:
