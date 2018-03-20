@@ -1,7 +1,7 @@
 # Meme Finder
 Meme Finder is Flask powered WebApp meme search engine.
   - Access GIPHY, IMGUR, REDDIT API to find dank memes
-  - Saves your favorite memes into MemeBox
+  - Save your favorite memes into MemeBox
 
 # Installation
 In terminal/command prompt, root directoty of the project.
@@ -24,7 +24,7 @@ Install requirments
 
 Install secrets.py module into the root folder
 
-    file will be included during submission
+    secrets.py file will be included during submission
 
 Run app
 
@@ -33,7 +33,8 @@ Run app
 App should be at 127.0.0.1:5000
 For testing
 
-    python -m unittest backEndTest.py
+    python -m unittest tests.back_end_test
+    python -m unittest tests.front_end_test
 
 # Features
 
@@ -68,15 +69,16 @@ For testing
         |- layout.html
         |- meme.html
         |- memebox.html
-    |- backEndTest.py : unittest module for testing back ends
-    |- memeCache.py : responsible for handling cache/MemeBox file I/O as well as cache verification/expired cache deletion
-    |- memeFinder.py : master API module. Also handles cache/meme data for display
-    |- memeFinderGiphy.py : GIPHY API module. API requests and create Meme objects
-    |- memeFinderImgur.py : IMGUR API module. API requests and create Meme objects. Uses imgurpython for API calls
-    |- memeFinderReddit.py : REDDIT API module. API requests and create Meme objects. Uses praw for API calls
-    |- memeLogging.py : logging setup module
+    |- tests : testing modules folder
+        |- back_end_test.py  : unittest module for testing back ends
+        |- front_end_test.py : selenium powered automated front end test module
+    |- geckodriver.exe : firefox driver required for front end test
+    |- meme_cache.py : responsible for handling cache/MemeBox file I/O as well as cache verification/expired cache deletion
+    |- meme_finder.py : master API module. Also handles cache/meme data for display
+    |- meme_finder_giphy.py : GIPHY API module. API requests and create Meme objects
+    |- meme_finder_imgur.py : IMGUR API module. API requests and create Meme objects. Uses imgurpython for API calls
+    |- meme_finder_reddit.py : REDDIT API module. API requests and create Meme objects. Uses praw for API calls
+    |- meme_logging.py : logging setup module
     |- requirements.txt : required module lists
     |- webapp.py : main program
 
-# Extra
-blah blah blah
