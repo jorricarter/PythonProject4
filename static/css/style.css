@@ -1,4 +1,5 @@
 body{
+    background-color: #6495ed;
     text-align: center;
 }
 table {
@@ -11,6 +12,7 @@ text-align: center;
 }
 
 img{
+    border: 5px black;
     width: 300px;
     height: auto;
 }
@@ -18,8 +20,4 @@ img{
 .source{
     text-align: center;
     text-transform: uppercase;
-}
-
-#bot_padding{
-    padding-bottom: 40px;
 }
