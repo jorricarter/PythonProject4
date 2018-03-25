@@ -4,7 +4,6 @@
 from secrets import GIPHY_KEY
 import requests
 import logging
-import time
 from urllib import parse
 
 
@@ -34,17 +33,7 @@ def get_meme(keyword, meme_only):
         logging.debug("url:" + url)  # to check for the url string
         json_data = requests.get(url).json()
 
-        memes = []
-
-        # create meme objects
-        for entry in json_data:
-            meme = create_meme_object(entry, keyword, meme_only)
-            memes.append(meme)
-
-        # Log number of memes found
-        logging.info('Giphy memes: ' + str(len(json_data)))
-
-        return memes
+        return json_data['data']
 
     except KeyError as ke:  # if there are no environment variable setup/found for GIPHY_KEY
         logging.error(ke)
@@ -59,21 +48,20 @@ def get_meme(keyword, meme_only):
         logging.error(ve)
 
 
-def create_meme_object(data, kw, mo):
-    from classes import Meme
+def create_meme_object(meme):
+    from meme_finder import Meme
     # meme post title
-    post_title = str(data['title'])
-
-    # For <a href...> link
-    post_link = data['embed_url']
+    title = str(meme['title'])
 
     # Gets the downsized img url from the api_response
-    img_src = data['images']['downsized']['url']
+    img_src = meme['images']['downsized']['url']
 
-    giphy_meme = Meme(post_link, img_src, 'giphy', post_title, kw, mo)
+    # For <a href...> link
+    post_link = meme['embed_url']
+
+    giphy_meme = Meme('giphy', title, img_src, post_link)
 
     return giphy_meme
-
 
 
 # # Used for the testing purposes

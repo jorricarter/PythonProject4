@@ -6,12 +6,38 @@ import meme_finder_giphy
 import meme_finder_imgur
 import meme_finder_reddit
 import concurrent.futures
-import classes
-from db_sqlite import *
+from meme_cache import pickle_data, check_cache, TODAY
 
 
 # turn on logging
 log = logging.getLogger(__name__)
+
+
+# Objects ##########################################################################################################
+
+# Meme class object:
+class Meme:
+    def __init__(self, source="No source", title="No results", img_src="", post_link="/"):
+        self.source = source    # where it originated from (giphy/imgur/reddit)
+        self.title = title      # post title
+        self.img_src = img_src    # direct image link
+        self.post_link = post_link  # post link
+
+    def to_json(self):
+        return json.dumps(self, default=lambda o: o.__dict__, indent=4)
+
+
+# Holds the JSON data and other info to save within the cache
+class MemeCache:
+    def __init__(self, keyword, meme_only, source, data, date=TODAY):
+        self.keyword = keyword
+        self.meme_only = meme_only
+        self.source = source
+        self.data = data    # from API requeest
+        self.date = date    # date that's created
+
+    def to_json(self):
+        return json.dumps(self, default=lambda o: o.__dict__, indent=4)
 
 
 # Functions #######################################################################################################
@@ -19,7 +45,7 @@ log = logging.getLogger(__name__)
 # main function to find meme with the keyword and meme_only value option
 def find_meme(keyword, meme_only):
 
-    logging.info("Looking for dank memes by keyword:{} meme_only:{}".format(keyword, str(meme_only)))
+    logging.info("Looking for dank memes for keyword:{} meme_only:{}".format(keyword, str(meme_only)))
 
     # Speed comparison test.
     threading_speed_test_on = False  # switch to True is you want to test. WARNING: switch back to False after testing.
@@ -27,21 +53,20 @@ def find_meme(keyword, meme_only):
         test_api_call_speed_with_threading_and_without_threading()
 
     # checks for the cache with the keyword and meme_only value
-    fresh_meme_data, old_meme_source_list = retrieve_cache(keyword, meme_only)
+    fresh_meme_data, old_meme_source_list = check_cache(keyword, meme_only)
 
     # if sources are found in old_meme_source_list, get fresh memes from each API and refresh cache
     if len(old_meme_source_list) > 0:
         fresh_meme_data = get_fresh_memes(fresh_meme_data, old_meme_source_list, keyword, meme_only)
-        
-
+        pickle_data(fresh_meme_data)
     else:
         logging.info("Pulling (keyword:{} meme_only:{}) search results from cache".format(keyword, str(meme_only)))
 
     try:
         # picks one meme from each source and adds onto the memes list
-        memes = [select_random_by_source('giphy'),
-                 select_random_by_source('imgur'),
-                 select_random_by_source('reddit')]
+        memes = [pick_meme(next(meme_data for meme_data in fresh_meme_data if meme_data.source == 'giphy')),
+                 pick_meme(next(meme_data for meme_data in fresh_meme_data if meme_data.source == 'imgur')),
+                 pick_meme(next(meme_data for meme_data in fresh_meme_data if meme_data.source == 'reddit'))]
 
         # debug purposes to see the memes
         for meme in memes:
@@ -50,7 +75,7 @@ def find_meme(keyword, meme_only):
         return memes
 
     except TypeError:
-        logging.error("No meme data")
+        logging.error("No meme datas")
 
 # Make API request calls to get new meme data if there are no fresh memes from the list
 def get_fresh_memes(fresh_meme_data, old_meme_source_list, keyword, meme_only):
@@ -72,7 +97,7 @@ def get_fresh_memes(fresh_meme_data, old_meme_source_list, keyword, meme_only):
     return fresh_meme_data
 
 
-# If there are no fresh meme found on cache, get a new collection of Meme objects from source
+# If there are no fresh meme found on cache, get a new meme data from the appropriate source
 def api_call(keyword, meme_only, source):
 
     if source == 'giphy':
@@ -82,7 +107,31 @@ def api_call(keyword, meme_only, source):
     else:
         meme_data = meme_finder_reddit.get_meme(keyword, meme_only)
 
-    return meme_data
+    # create a MemeCache object with the new meme_data
+    fresh_meme_cache = MemeCache(keyword, meme_only, source, meme_data)
+
+    return fresh_meme_cache
+
+
+# picks one meme randomly from the meme_data
+def pick_meme(meme_data):
+
+    try:
+        meme = random.choice(meme_data.data)
+
+        if meme_data.source == 'giphy':
+            return meme_finder_giphy.create_meme_object(meme)
+
+        elif meme_data.source == 'imgur':
+            return meme_finder_imgur.create_meme_object(meme)
+
+        else:
+            return meme_finder_reddit.create_meme_object(meme)
+
+    except IndexError as ie:  # if search didn't find any result with tht keyword, return default Meme with it
+        logging.error(ie)
+        logging.info("No meme data found. Creating a default Meme object")
+        return Meme(meme_data.source)
 
 
 # fix the annoying en/decoding issue with amps/ASCII
@@ -135,7 +184,7 @@ def test_api_call_speed_with_threading_and_without_threading():
     logging.info("Without threading: " + str(avg_no_thread_duration))
     logging.info("With threading: " + str(avg_with_thread_duration))
 
-    logging.info("Threading is faster than no threading by {}%!".format((performance, '.2f')))
+    logging.info("Threading is faster than no threading by {}%!".format(performance, '.2f'))
 
     logging.info("######Threading speed test ends here######")
 

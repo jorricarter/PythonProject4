@@ -1,42 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Meme Finder</title>
 
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='css/style.css') }}">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script>
-        var str_src = "{{url_for('static', filename = 'jquery.js')}}"
-        window.jQuery || document.write('<script src=' + str_src + '>\x3C/script>')
-    </script>
-    <script type=text/javascript>
-        $SCRIPT_ROOT = {
-            {
-                request.script_root
-            }
-        };
-    </script>
-</head>
+    <script>window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
+    <script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root }};</script>
 
+</head>
 <body>
 
     <h1>MEME FINDER</h1>
+    <hr>
 
-    <hr> {% block content %}{% endblock %}
+    {% block content %}{% endblock %}
 
     <hr>
     <p>
-        <a href="/" id="main_link">Search</a>
-        <a href="/login" id="login_link">Login/Change User</a>
-        <a href="/memebox" id="memebox_link">MemeBox</a>
-        <a href="/about" id="about_link">About</a>
+    <a href="/" id="main_link">Search</a>
+    <a href="/memebox" id="memebox_link">MemeBox</a>
+    <a href="/about" id="about_link">About</a>
 
     </p>
 
 </body>
-
 </html>

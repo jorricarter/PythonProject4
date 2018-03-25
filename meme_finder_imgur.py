@@ -41,14 +41,7 @@ def get_meme(keyword, meme_only):
 
     try:
         # Search request
-        results = client.gallery_search(
-            keyword, sort=sort, window=window, page=page)
-        
-        memes = []
-        
-        for r in results:
-            meme = create_meme_object(r, keyword, meme_only)
-            memes.append(meme)
+        memes = client.gallery_search(keyword, sort=sort, window=window, page=page)
 
         logging.info("IMGUR memes: " + str(len(memes)))
 
@@ -59,14 +52,14 @@ def get_meme(keyword, meme_only):
         logging.error(e.status_code)
 
 
-def create_meme_object(meme, kw, mo):
-    from classes import Meme
+def create_meme_object(meme):
+    from meme_finder import Meme
 
     title = meme.title
 
     # checks if meme is a GalleryAlbum object
     #   necessary because the search finds both GalleryAlbum objects and GalleryImage objects, both of which
-    #   have different data structure.
+    #   has different data structure.
     if type(meme) is GalleryAlbum:
         img_src = meme.images[0]['link']  # img source
     else:
@@ -74,7 +67,7 @@ def create_meme_object(meme, kw, mo):
 
     post_link = meme.link # img page
 
-    imgur_meme = Meme(post_link, img_src, 'imgur', title, kw, mo)
+    imgur_meme = Meme('imgur', title, img_src, post_link)
 
     return imgur_meme
 

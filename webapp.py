@@ -6,8 +6,7 @@ from flask import Flask, render_template, request
 from wtforms import Form, StringField, BooleanField, validators   # Flask input validator extension module
 from meme_logging import logging_setup
 from meme_finder import find_meme
-from db_sqlite import *
-#from meme_cache import save_to_memebox, load_memebox, delete_meme
+from meme_cache import save_to_memebox, load_memebox, delete_meme
 
 
 # setup logging config
@@ -15,38 +14,10 @@ logging_setup()
 
 app = Flask(__name__)
 
-user = ''
 
 class MemeSearchForm(Form):
     keyword = StringField('keyword', [validators.Length(min=1, max=30)])    # validate input to be 1-30 characters long
     meme_only = BooleanField('meme_only')
-
-class LoginForm(Form):
-    username = StringField('username', [validators.Length(min=1, max=30)])
-    password = StringField('password', [validators.Length(min=1, max=30)])
-
-
-@app.route("/login", methods=['POST', 'GET'])
-def login():
-
-    login_form = LoginForm(request.form)
-    if request.method == 'POST' and login_form.validate():
-        uname = login_form.username
-        pword = login_form.password
-        
-        # attempt login
-        try:
-            # login method gets user ID
-            user = login_user(uname, pword)
-        
-        except Exception as e:
-            logging.info('Failed to log in: ' + e)
-
-        return render_template('index.html')
-
-    # if user visits Change User via the link at the bottom of the page
-    else:
-        return render_template('login.html')
 
 
 # index page
@@ -95,8 +66,8 @@ def meme():
 
     # save a meme to MemeBox if user presses the button on the meme page
     if request.method == 'POST':
-        # Meme object in dictionary form
-        add_to_memebox(user, meme.meme_id)
+        meme_dict = request.form.to_dict()  # Meme object in dictionary form
+        save_to_memebox(meme_dict)
         logging.info("Saved data: " + str(meme))
 
         # need to return something, else valueError will occur
@@ -109,25 +80,23 @@ def memebox():
     # if user presses delete button beside the meme, delete the meme
     if request.method == 'POST':
 
-        memebox_items = sel_memebox(user)
-
         # get the name=(MemeBox index number) of the submit button
         meme_delete = int(list(request.form)[0])
 
         logging.debug("index " + str(meme_delete) + " will be deleted")  # debug msg
 
-        # delete the meme from the MemeBox using the id of the meme in the index number
-        del_meme(memebox_items[meme_delete].memeId)
+        # delete the meme from the MemeBox using the index number
+        delete_meme(meme_delete)
 
         # refresh MemeBox contents
-        memebox_items = sel_memebox(user)
+        memebox_items = load_memebox()
 
         # And render the memebox.html using the refreshed list
         return render_template('memebox.html', memebox_items=memebox_items)
 
     # if user visits the MemeBox via the link at the bottom of the page
     else:
-        memebox_items = sel_memebox(user)
+        memebox_items = load_memebox()
 
         return render_template('memebox.html', memebox_items=memebox_items)
 

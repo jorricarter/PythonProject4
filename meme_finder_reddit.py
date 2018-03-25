@@ -5,7 +5,6 @@ from secrets import REDDIT_ID, REDDIT_SECRET
 import praw
 import logging
 from praw.exceptions import APIException, ClientException, PRAWException
-from classes import Meme
 
 
 # logging setup
@@ -44,24 +43,14 @@ def get_meme(keyword, meme_only):
     sort = 'relevance'    # Can be one of: relevance, hot, top, new, comments. (default: relevance).
     syntax = 'lucene'   # Can be one of: cloudsearch, lucene, plain (default: lucene).
     time_filter = 'all'     # Can be one of: all, day, hour, month, week, year (default: all).
-    lim = 25      # maximum number of memes to return
 
     try:
         # create a memes list and if the submission url ends with the file extension
         # (In another words, 4th character from the end with a period), append the url and shortlink dictionary to the list
         memes = []
-        submissions = reddit.subreddit(subreddit).search(keyword, sort=sort, syntax=syntax, time_filter=time_filter, limit=lim)
-        for submission in submissions:
+        for submission in reddit.subreddit(subreddit).search(keyword, sort=sort, syntax=syntax, time_filter=time_filter):
             if submission.url[-4] == '.':
-                # memes.append({'title': submission.title, 'url': submission.url, 'shortlink': submission.shortlink})
-
-                # create object from result
-                reddit_meme = Meme(submission.shortlink, submission.url, 'reddit', submission.title, keyword, meme_only)
-
-                # append data
-                memes.append(reddit_meme)
-
-        logging.info('Reddit memes: ' + str(len(memes)))
+                memes.append({'title': submission.title, 'url': submission.url, 'shortlink': submission.shortlink})
 
         return memes
 
@@ -79,13 +68,14 @@ def get_meme(keyword, meme_only):
     #     return Meme('reddit')
 
 
-def create_meme_object(data, kw, mo):
+def create_meme_object(meme):
+    from meme_finder import Meme
 
-    post_title = str(data['title'])   # post title
-    post_link = data['shortlink']   # reddit post link
-    imc_src = data['url']  # img src
+    title = str(meme['title'])   # post title
+    imc_src = meme['url']  # img src
+    post_link = meme['shortlink']   # reddit post link
 
-    reddit_meme = Meme(post_link, imc_src,  'reddit', post_title, kw, mo)
+    reddit_meme = Meme('reddit', title, imc_src, post_link)
 
     return reddit_meme
 

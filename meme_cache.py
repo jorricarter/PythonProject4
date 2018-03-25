@@ -126,7 +126,7 @@ def delete_old_cache(cache_data):
 
 # When user clicks "I like this meme!" button, that meme will be saved onto the file
 def save_to_memebox(meme_dict):
-    from classes import Meme
+    from meme_finder import Meme
 
     # create Meme class object from dictionary
     meme = Meme(meme_dict['source'], meme_dict['title'], meme_dict['img_src'], meme_dict['post_link'])
