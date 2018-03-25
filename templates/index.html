@@ -1,12 +1,11 @@
-{% extends "layout.html" %}
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 
-    <div class="container">
-        <form name="keyword_form" method="POST">
-            Keyword <input type="text" name="keyword">
-            <input type="submit" value="Get meme!">
-            <input type="checkbox" name="meme_only" checked> meme only
-        </form>
-    </div>
+<div class="container">
+    <form name="keyword_form" method="POST">
+        Keyword <input type="text" name="keyword">
+        <input type="submit" value="Get meme!">
+        <input type="checkbox" name="meme_only" checked> meme only
+    </form>
+</div>
 
 {% endblock %}
