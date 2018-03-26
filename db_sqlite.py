@@ -74,11 +74,12 @@ def create_user(firstname, lastname, username, password):
         try:
             # Create new username if name is not taken.
             if not cur.execute('SELECT * FROM users WHERE username=?', (username)):
-                cur.execute('INSERT INTO users VALUES (rowid, ?, ?, ?, ?)', (firstname, lastname, username, password))
+                user = cur.execute('INSERT INTO users VALUES (rowid, ?, ?, ?, ?)', (firstname, lastname, username, password))
                 db.commit()
+                return user.rowId
             
             else:
-                return None
+                return False
 
         except sqlite3.Error as e:
             logging.debug('SQL ERROR. Failed to add user.')

@@ -318,3 +318,6 @@
 2018-03-26 18:05:23,128 - werkzeug - INFO - _internal : 88 - 127.0.0.1 - - [26/Mar/2018 18:05:23] "GET /static/css/style.css HTTP/1.1" 200 -
 2018-03-26 18:09:25,303 - werkzeug - INFO - _internal : 88 -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 2018-03-26 18:09:30,939 - werkzeug - INFO - _internal : 88 - 127.0.0.1 - - [26/Mar/2018 18:09:30] "GET /login HTTP/1.1" 200 -
+2018-03-26 18:10:39,759 - werkzeug - INFO - _internal : 88 -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2018-03-26 18:10:54,330 - werkzeug - INFO - _internal : 88 - 127.0.0.1 - - [26/Mar/2018 18:10:54] "GET / HTTP/1.1" 200 -
+2018-03-26 18:10:58,970 - werkzeug - INFO - _internal : 88 - 127.0.0.1 - - [26/Mar/2018 18:10:58] "GET /login HTTP/1.1" 200 -
