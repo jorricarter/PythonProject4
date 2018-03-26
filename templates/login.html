@@ -1,39 +1,52 @@
 {% extends "layout.html" %} {% block content %}
 
-<div id="login_table" class="container">
+<form name="login_form" action="{{ url_for('login') }}" method="POST"></form>
 
-    <h1>Log in/Create account</h1>
+<table>
+    
+    <tr>
+        <td><h3>Login</h3></td>
+        <td><h3>Create Account</h3></td>
+    </tr>
 
-    <table>
-        <tr>
-            <td>Username<input id='username' type='text' name='uname'></td>
-        </tr>
-        <tr>
-            <td>Password<input id='password' type='text' name='pword'></td>
-        </tr>
-        <tr>
-            <td><button id="login_button">Login</button></td>
-            <td><button id="create_account">Create Account</button></td>
-        </tr>
-    </table>
+    <tr>
+        <td>Username<input id='username' type='text' name='uname'></td>
+        <td>First Name<input id='create_firstname' type='text' name='create_fname'></td>
+    </tr>
 
-</div>
+    <tr>
+        <td>Password<input id='password' type='text' name='pword'></td>
+        <td>Last Name<input id='create_lastname' type='text' name='create_lname'></td>
+    </tr>
 
+    <tr>
+        <td><button name="login_button">Login</button></td>
+        <td>Choose Username<input id='create_username' type='text' name='create_uname'></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Choose Password<input id='create_password' type='text' name='create_pword'></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><button name="create_button">Create Account</button></td>
+    </tr>
 
+</table>
 
 <script type="text/javascript">
-    //creates dictionary object to pass for logging in
-    var user_entry = {
-        'username': '{{ username }}',
-        'password': '{{ password }}'
-    };
 
-    // variables to check if user already has added meme to MemeBox
-    var login_button_clicked = false;
-    var new_user_button_clicked = false;
+    var login_clicked = false;
+    var new_user_clicked = false;
 
     $(function() {
         $("login_button").click(function() {
+
+            //creates dictionary object to pass for logging in
+            var user_entry = {
+                'username': request.form['uname'].value,
+                'password': request.form['pword'].value
+            };
 
             // If user presses login, check DB for user/pw
             //  if it's successful, redirect to index. If not, alert cause.
@@ -43,14 +56,43 @@
                     data: user_entry,
                     type: 'POST',
                     success: function() {
-                        alert('Welcome {{user_entry.username}}');
+                        alert("Welcome, {{ request.form['uname'] }}!");
                     },
                     error: function(error) {
                         alert('Login failed.');
                     }
                 }); // ajax end
+                login_clicked = true;
+            }
+        });
+
+        // On click, retrieve input fields for new user
+
+        $("create_button").click(function () {
+            var new_user = {
+                'firstname': request.form['create_fname'],
+                'lastname': request.form['create_lname'],
+                'username': request.form['create_uname'],
+                'password': request.form['create)pword']
+            };
+
+            // If user presses create, validate fields and enter into DB
+            // On create, redirect to index. If not, alert cause.
+            if (this.id == "create_button") {
+                $.ajax({
+                    url: '/login',
+                    data: new_user,
+                    type: 'POST',
+                    success: function () {
+                        alert("Account created!");
+                    },
+                    error: function (error) {
+                        alert('Login failed.');
+                    }
+                }); // ajax end
             }
 
+            new_user_clicked = true;   
         });
     });
 </script>

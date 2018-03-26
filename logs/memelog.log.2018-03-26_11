@@ -1,0 +1,466 @@
+2018-03-26 11:27:11,688 - werkzeug - INFO - _internal : 88 -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2018-03-26 11:27:18,440 - werkzeug - INFO - _internal : 88 - 127.0.0.1 - - [26/Mar/2018 11:27:18] "GET / HTTP/1.1" 200 -
+2018-03-26 11:27:24,253 - root - DEBUG - webapp : 64 - keyword: football --search query
+2018-03-26 11:27:24,254 - root - DEBUG - webapp : 65 - meme_only: True --on for meme only checked/ None for unchecked
+2018-03-26 11:27:24,255 - root - INFO - meme_finder : 22 - Looking for dank memes by keyword:football meme_only:True
+2018-03-26 11:27:24,257 - root - DEBUG - db_sqlite : 29 - SQL ERROR. Failed to clear cache.
+2018-03-26 11:27:24,258 - root - DEBUG - db_sqlite : 30 - no such column: day
+2018-03-26 11:27:24,263 - root - INFO - db_sqlite : 57 - No meme from giphy found
+2018-03-26 11:27:24,265 - root - INFO - db_sqlite : 57 - No meme from imgur found
+2018-03-26 11:27:24,268 - root - INFO - db_sqlite : 57 - No meme from reddit found
+2018-03-26 11:27:24,269 - root - INFO - db_sqlite : 236 - Could not find fresh cache from: ['giphy', 'imgur', 'reddit']
+2018-03-26 11:27:24,271 - root - INFO - meme_finder_giphy : 18 - Accessing GIPHY API
+2018-03-26 11:27:24,273 - root - DEBUG - meme_finder_giphy : 30 - keyword: football
+2018-03-26 11:27:24,275 - root - DEBUG - meme_finder_giphy : 34 - url:http://api.giphy.com/v1/gifs/search?q=football&api_key=j5jfFyrNeH00309l3bVY2WpMeLJbXpB5&limit=25
+2018-03-26 11:27:24,611 - root - INFO - meme_finder_giphy : 46 - GIPHY memes: 25
+2018-03-26 11:27:24,615 - root - INFO - meme_finder_imgur : 18 - Accessing IMGUR API
+2018-03-26 11:27:25,198 - root - DEBUG - meme_finder_imgur : 26 - imgur auth url: https://api.imgur.com/oauth2/authorize?client_id=ccc816b49d80d78&response_type=pin
+2018-03-26 11:27:25,199 - root - DEBUG - meme_finder_imgur : 33 - keyword: football
+2018-03-26 11:27:26,215 - root - INFO - meme_finder_imgur : 53 - IMGUR memes: 57
+2018-03-26 11:27:26,218 - root - INFO - meme_finder_reddit : 17 - Accessing REDDIT API
+2018-03-26 11:27:26,226 - root - DEBUG - meme_finder_reddit : 29 - reddit read only?:True
+2018-03-26 11:27:26,227 - root - DEBUG - meme_finder_reddit : 38 - subreddit value: all
+2018-03-26 11:27:28,055 - root - INFO - meme_finder_reddit : 62 - REDDIT memes: 31
+2018-03-26 11:27:28,062 - root - INFO - meme_finder : 70 - Execution time: 3.7902441024780273
+2018-03-26 11:27:28,064 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,066 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 64 supplied.
+2018-03-26 11:27:28,077 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,078 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 69 supplied.
+2018-03-26 11:27:28,091 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,093 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 66 supplied.
+2018-03-26 11:27:28,102 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,104 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 61 supplied.
+2018-03-26 11:27:28,115 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,117 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 68 supplied.
+2018-03-26 11:27:28,127 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,129 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 64 supplied.
+2018-03-26 11:27:28,139 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,140 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 61 supplied.
+2018-03-26 11:27:28,148 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,149 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 68 supplied.
+2018-03-26 11:27:28,161 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,163 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 64 supplied.
+2018-03-26 11:27:28,174 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,176 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 64 supplied.
+2018-03-26 11:27:28,187 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,189 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 68 supplied.
+2018-03-26 11:27:28,202 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,203 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 68 supplied.
+2018-03-26 11:27:28,214 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,215 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 69 supplied.
+2018-03-26 11:27:28,227 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,228 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 68 supplied.
+2018-03-26 11:27:28,240 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,241 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 69 supplied.
+2018-03-26 11:27:28,249 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,250 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 54 supplied.
+2018-03-26 11:27:28,261 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,262 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 64 supplied.
+2018-03-26 11:27:28,271 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,272 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 59 supplied.
+2018-03-26 11:27:28,283 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,284 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 69 supplied.
+2018-03-26 11:27:28,293 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,295 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 65 supplied.
+2018-03-26 11:27:28,305 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,307 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 69 supplied.
+2018-03-26 11:27:28,319 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,320 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 64 supplied.
+2018-03-26 11:27:28,332 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,333 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 59 supplied.
+2018-03-26 11:27:28,348 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,350 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 69 supplied.
+2018-03-26 11:27:28,366 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,367 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 69 supplied.
+2018-03-26 11:27:28,382 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,383 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,398 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,399 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,410 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,411 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,421 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,422 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,432 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,433 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,443 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,444 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,454 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,455 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,465 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,466 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,482 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,483 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,498 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,499 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,514 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,514 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,530 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,531 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,546 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,547 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,567 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,568 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,584 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,584 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,594 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,595 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,606 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,607 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,619 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,620 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,631 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,632 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,642 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,643 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,653 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,655 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,670 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,671 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,688 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,690 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,705 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,706 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,720 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,721 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,737 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,737 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,753 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,754 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,769 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,770 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,780 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,781 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,790 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,791 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,801 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,802 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,812 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,813 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,823 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,824 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,834 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,835 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,851 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,852 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,868 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,869 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,884 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,885 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,900 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,901 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,916 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,917 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,932 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,933 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,944 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,946 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,956 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,957 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,967 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,968 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,979 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,980 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:28,990 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:28,991 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:29,002 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,003 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:29,012 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,014 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:29,029 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,031 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:29,046 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,047 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:29,064 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,065 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:29,082 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,083 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:29,100 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,102 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:29,122 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,124 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:29,138 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,139 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:29,149 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,151 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:29,161 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,162 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:29,173 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,174 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:29,185 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,186 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 34 supplied.
+2018-03-26 11:27:29,196 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,198 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 30 supplied.
+2018-03-26 11:27:29,211 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,212 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 53 supplied.
+2018-03-26 11:27:29,228 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,229 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 34 supplied.
+2018-03-26 11:27:29,244 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,246 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 35 supplied.
+2018-03-26 11:27:29,261 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,262 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:29,277 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,278 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 34 supplied.
+2018-03-26 11:27:29,292 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,293 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 50 supplied.
+2018-03-26 11:27:29,305 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,306 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 30 supplied.
+2018-03-26 11:27:29,316 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,317 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 34 supplied.
+2018-03-26 11:27:29,327 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,328 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 34 supplied.
+2018-03-26 11:27:29,338 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,339 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 34 supplied.
+2018-03-26 11:27:29,349 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,351 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 35 supplied.
+2018-03-26 11:27:29,363 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,365 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 30 supplied.
+2018-03-26 11:27:29,380 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,382 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 30 supplied.
+2018-03-26 11:27:29,398 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,399 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 34 supplied.
+2018-03-26 11:27:29,415 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,417 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 30 supplied.
+2018-03-26 11:27:29,432 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,434 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 34 supplied.
+2018-03-26 11:27:29,452 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,453 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 63 supplied.
+2018-03-26 11:27:29,471 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,472 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 35 supplied.
+2018-03-26 11:27:29,487 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,489 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 30 supplied.
+2018-03-26 11:27:29,504 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,506 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 34 supplied.
+2018-03-26 11:27:29,520 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,521 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 35 supplied.
+2018-03-26 11:27:29,533 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,535 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:29,546 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,548 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 34 supplied.
+2018-03-26 11:27:29,561 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,562 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 30 supplied.
+2018-03-26 11:27:29,582 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,584 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:29,612 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,614 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 34 supplied.
+2018-03-26 11:27:29,633 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,635 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 30 supplied.
+2018-03-26 11:27:29,653 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,654 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:27:29,669 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:27:29,671 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 30 supplied.
+2018-03-26 11:27:29,687 - root - INFO - meme_finder : 43 - 113 new dank memes were added to db
+2018-03-26 11:27:29,690 - root - DEBUG - webapp : 70 - Memes displayed
+2018-03-26 11:27:29,691 - root - DEBUG - webapp : 75 - id:14 source::GIPHY: title:german football GIF by Hertha BSC img:https://media0.giphy.com/media/l2JhKgiMHmZtNktXO/giphy-downsized.gif link:https://giphy.com/embed/l2JhKgiMHmZtNktXO
+2018-03-26 11:27:29,693 - root - DEBUG - webapp : 75 - id:51 source::IMGUR: title:Football img:https://i.imgur.com/ACB8aKk.png link:https://imgur.com/a/d5pz8
+2018-03-26 11:27:29,694 - root - DEBUG - webapp : 75 - id:86 source::REDDIT: title:This is older, but I found it on my Facebook memories and couldn't not post this since college football season in Oklahoma is here and I get to listen to angry fans yell at each other about all the important football things. img:https://i.redd.it/r9tkusnpf5lz.jpg link:https://redd.it/6zc1g7
+2018-03-26 11:27:29,910 - werkzeug - INFO - _internal : 88 - 127.0.0.1 - - [26/Mar/2018 11:27:29] "POST / HTTP/1.1" 200 -
+2018-03-26 11:54:28,984 - werkzeug - INFO - _internal : 88 -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2018-03-26 11:54:48,095 - werkzeug - INFO - _internal : 88 - 127.0.0.1 - - [26/Mar/2018 11:54:48] "GET / HTTP/1.1" 200 -
+2018-03-26 11:54:52,911 - root - DEBUG - webapp : 64 - keyword: baseball --search query
+2018-03-26 11:54:52,912 - root - DEBUG - webapp : 65 - meme_only: True --on for meme only checked/ None for unchecked
+2018-03-26 11:54:52,913 - root - INFO - meme_finder : 22 - Looking for dank memes by keyword:baseball meme_only:True
+2018-03-26 11:54:52,916 - root - DEBUG - db_sqlite : 29 - SQL ERROR. Failed to clear cache.
+2018-03-26 11:54:52,917 - root - DEBUG - db_sqlite : 30 - no such column: day
+2018-03-26 11:54:52,918 - root - INFO - db_sqlite : 57 - No meme from giphy found
+2018-03-26 11:54:52,921 - root - INFO - db_sqlite : 57 - No meme from imgur found
+2018-03-26 11:54:52,923 - root - INFO - db_sqlite : 57 - No meme from reddit found
+2018-03-26 11:54:52,925 - root - INFO - db_sqlite : 236 - Could not find fresh cache from: ['giphy', 'imgur', 'reddit']
+2018-03-26 11:54:52,928 - root - INFO - meme_finder_giphy : 18 - Accessing GIPHY API
+2018-03-26 11:54:52,929 - root - DEBUG - meme_finder_giphy : 30 - keyword: baseball
+2018-03-26 11:54:52,931 - root - DEBUG - meme_finder_giphy : 34 - url:http://api.giphy.com/v1/gifs/search?q=baseball&api_key=j5jfFyrNeH00309l3bVY2WpMeLJbXpB5&limit=25
+2018-03-26 11:54:53,272 - root - INFO - meme_finder_giphy : 46 - GIPHY memes: 25
+2018-03-26 11:54:53,275 - root - INFO - meme_finder_imgur : 18 - Accessing IMGUR API
+2018-03-26 11:54:53,843 - root - DEBUG - meme_finder_imgur : 26 - imgur auth url: https://api.imgur.com/oauth2/authorize?client_id=ccc816b49d80d78&response_type=pin
+2018-03-26 11:54:53,844 - root - DEBUG - meme_finder_imgur : 33 - keyword: baseball
+2018-03-26 11:54:55,071 - root - INFO - meme_finder_imgur : 53 - IMGUR memes: 57
+2018-03-26 11:54:55,075 - root - INFO - meme_finder_reddit : 17 - Accessing REDDIT API
+2018-03-26 11:54:55,083 - root - DEBUG - meme_finder_reddit : 29 - reddit read only?:True
+2018-03-26 11:54:55,084 - root - DEBUG - meme_finder_reddit : 38 - subreddit value: all
+2018-03-26 11:54:55,925 - root - INFO - meme_finder_reddit : 63 - REDDIT memes: 2
+2018-03-26 11:54:55,931 - root - INFO - meme_finder : 70 - Execution time: 3.00359845161438
+2018-03-26 11:54:55,933 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:55,934 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 69 supplied.
+2018-03-26 11:54:55,955 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:55,957 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 59 supplied.
+2018-03-26 11:54:55,970 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:55,971 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 54 supplied.
+2018-03-26 11:54:55,992 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:55,994 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 68 supplied.
+2018-03-26 11:54:56,010 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,011 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 64 supplied.
+2018-03-26 11:54:56,024 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,026 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 68 supplied.
+2018-03-26 11:54:56,041 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,043 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 69 supplied.
+2018-03-26 11:54:56,055 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,056 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 64 supplied.
+2018-03-26 11:54:56,070 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,071 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 64 supplied.
+2018-03-26 11:54:56,085 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,087 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 69 supplied.
+2018-03-26 11:54:56,101 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,102 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 69 supplied.
+2018-03-26 11:54:56,122 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,124 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 68 supplied.
+2018-03-26 11:54:56,137 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,139 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 54 supplied.
+2018-03-26 11:54:56,163 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,164 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 68 supplied.
+2018-03-26 11:54:56,182 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,184 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 54 supplied.
+2018-03-26 11:54:56,203 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,205 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 65 supplied.
+2018-03-26 11:54:56,222 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,224 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 64 supplied.
+2018-03-26 11:54:56,241 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,242 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 69 supplied.
+2018-03-26 11:54:56,257 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,259 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 66 supplied.
+2018-03-26 11:54:56,273 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,274 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 54 supplied.
+2018-03-26 11:54:56,291 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,292 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 69 supplied.
+2018-03-26 11:54:56,307 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,309 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 69 supplied.
+2018-03-26 11:54:56,331 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,332 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 61 supplied.
+2018-03-26 11:54:56,355 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,357 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 66 supplied.
+2018-03-26 11:54:56,375 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,377 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 64 supplied.
+2018-03-26 11:54:56,395 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,397 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,414 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,416 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,434 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,435 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,452 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,453 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,466 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,468 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,479 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,480 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,490 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,492 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,505 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,506 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,517 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,517 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,527 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,529 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,541 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,542 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,559 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,560 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,576 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,577 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,592 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,594 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,610 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,611 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,625 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,626 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,637 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,638 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,650 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,652 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,662 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,664 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,675 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,676 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,691 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,693 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,711 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,712 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,730 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,731 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,749 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,750 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,767 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,768 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,784 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,785 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,799 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,800 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,810 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,811 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,822 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,822 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,833 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,834 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,846 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,847 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,857 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,857 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,869 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,870 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,885 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,886 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,902 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,903 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,918 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,919 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,934 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,935 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,953 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,954 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:56,976 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:56,977 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,000 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,001 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,013 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,015 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,026 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,027 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,040 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,042 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,054 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,055 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,068 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,069 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,080 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,081 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,101 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,102 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,119 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,120 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,137 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,137 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,155 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,156 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,172 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,173 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,188 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,189 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,205 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,207 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,228 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,230 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,257 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,259 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,292 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,294 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,359 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,362 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 31 supplied.
+2018-03-26 11:54:57,384 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,385 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 22 supplied.
+2018-03-26 11:54:57,407 - root - DEBUG - db_sqlite : 102 - SQL ERROR. Failed while checking meme list.
+2018-03-26 11:54:57,408 - root - DEBUG - db_sqlite : 103 - Incorrect number of bindings supplied. The current statement uses 1, and there are 22 supplied.
+2018-03-26 11:54:57,429 - root - INFO - meme_finder : 43 - 84 new dank memes were added to db
+2018-03-26 11:54:57,433 - root - DEBUG - webapp : 70 - Memes displayed
+2018-03-26 11:54:57,435 - root - DEBUG - webapp : 75 - id:127 source::GIPHY: title:chicago cubs baseball GIF by MLB img:https://media1.giphy.com/media/l0MYAWfxkJt4L5xio/giphy-downsized.gif link:https://giphy.com/embed/l0MYAWfxkJt4L5xio
+2018-03-26 11:54:57,436 - root - DEBUG - webapp : 75 - id:150 source::IMGUR: title:some baseball funnies for ya img:https://i.imgur.com/zvw5QGT.gif link:https://imgur.com/a/QG3I6
+2018-03-26 11:54:57,438 - root - DEBUG - webapp : 75 - id:197 source::REDDIT: title:https://i.imgur.com/xSg6FtQ.jpg img:https://redd.it/7nhq8y link:My grandma said they changed the name of the baseball stadium down the street. I was not expecting this.
+2018-03-26 11:54:57,867 - werkzeug - INFO - _internal : 88 - 127.0.0.1 - - [26/Mar/2018 11:54:57] "POST / HTTP/1.1" 200 -
+2018-03-26 11:55:26,973 - werkzeug - INFO - _internal : 88 - 127.0.0.1 - - [26/Mar/2018 11:55:26] "GET / HTTP/1.1" 200 -
+2018-03-26 11:55:36,914 - root - DEBUG - webapp : 64 - keyword: baseball --search query
+2018-03-26 11:55:36,915 - root - DEBUG - webapp : 65 - meme_only: True --on for meme only checked/ None for unchecked
+2018-03-26 11:55:36,917 - root - INFO - meme_finder : 22 - Looking for dank memes by keyword:baseball meme_only:True
+2018-03-26 11:55:36,920 - root - DEBUG - db_sqlite : 29 - SQL ERROR. Failed to clear cache.
+2018-03-26 11:55:36,921 - root - DEBUG - db_sqlite : 30 - no such column: day
+2018-03-26 11:55:36,923 - root - INFO - meme_finder : 49 - Pulling (keyword:baseball meme_only:True) search results from cache
+2018-03-26 11:55:36,926 - root - DEBUG - webapp : 70 - Memes displayed
+2018-03-26 11:55:36,927 - root - DEBUG - webapp : 75 - id:132 source::GIPHY: title:washington nationals baseball GIF img:https://media2.giphy.com/media/xT4uQsF9a28gS908NO/giphy-tumblr.gif link:https://giphy.com/embed/xT4uQsF9a28gS908NO
+2018-03-26 11:55:36,928 - root - DEBUG - webapp : 75 - id:164 source::IMGUR: title:A relic of baseball img:https://i.imgur.com/pQMdATE.jpg link:https://imgur.com/a/ORyhR
+2018-03-26 11:55:36,930 - root - DEBUG - webapp : 75 - id:196 source::REDDIT: title:http://mediadownloads.mlb.com/mlbam/2015/10/01/14-416010-2015-09-30/web_cut/mlbtv_511523483_1200K.mp4 img:https://redd.it/3n3m2d link:Sorority Girls at a Baseball Game
+2018-03-26 11:55:36,939 - werkzeug - INFO - _internal : 88 - 127.0.0.1 - - [26/Mar/2018 11:55:36] "POST / HTTP/1.1" 200 -

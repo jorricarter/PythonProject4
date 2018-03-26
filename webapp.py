@@ -22,14 +22,21 @@ class MemeSearchForm(Form):
     meme_only = BooleanField('meme_only')
 
 class LoginForm(Form):
-    username = StringField('username', [validators.Length(min=1, max=30)])
-    password = StringField('password', [validators.Length(min=1, max=30)])
+    username = StringField('uname', [validators.Length(min=1, max=30)])
+    password = StringField('pword', [validators.Length(min=1, max=30)])
 
+class NewUserForm(Form):
+    firstname = StringField('firstname', [validators.Length(min=1, max=30)])
+    lastname = StringField('lastname', [validators.Length(min=1, max=30)])
+    newUsername = StringField('new_uname', [validators.Length(min=1, max=30)])
+    newPassword = StringField('new_password', [validators.Length(min=1, max=30)])
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
 
     login_form = LoginForm(request.form)
+    new_user_form = NewUserForm(request.form)
+
     if request.method == 'POST' and login_form.validate():
         uname = login_form.username
         pword = login_form.password
@@ -37,12 +44,30 @@ def login():
         # attempt login
         try:
             # login method gets user ID
-            user = login_user(uname, pword)
+            userid = login_user(uname, pword)
         
-        except Exception as e:
-            logging.info('Failed to log in: ' + e)
+        except AttributeError as ae:
+            logging.error(ae)
+        except UnicodeEncodeError as ue:
+            logging.error(ue)
 
-        return render_template('index.html')
+
+        return render_template('index.html', user=userid)
+
+
+    elif request.method == 'POST' and new_user_form.validate():
+
+        fname = new_user_form.firstname
+        lname = new_user_form.lastname
+        uname = new_user_form.newUsername
+        pword = new_user_form.newPassword
+
+        # Send vars to DB to create new user
+        userid = create_user(fname, lname, uname, pword)
+
+
+        return render_template('index.html', user=userid)
+
 
     # if user visits Change User via the link at the bottom of the page
     else:

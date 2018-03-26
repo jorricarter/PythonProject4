@@ -14,8 +14,8 @@ db.row_factory = sqlite3.Row
 cur = db.cursor()
 cur.execute("PRAGMA foreign_keys = 1")
 
-cur.execute('CREATE TABLE IF NOT EXISTS users (rowid INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, username text, password text)')
-cur.execute('CREATE TABLE IF NOT EXISTS memecache (rowid INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, post_link text,img_src text,post_title text,source text,keyword text,meme_only boolean, date date)')
+cur.execute('CREATE TABLE IF NOT EXISTS users (rowid INTEGER NOT NULL PRIMARY KEY UNIQUE, firstname text, lastname text, username text, password text)')
+cur.execute('CREATE TABLE IF NOT EXISTS memecache (rowid INTEGER NOT NULL PRIMARY KEY UNIQUE,post_link text,img_src text,post_title text,source text,keyword text,meme_only boolean, date date)')
 cur.execute('CREATE TABLE IF NOT EXISTS memebox (user_id INTEGER, meme_id INTEGER, FOREIGN KEY(user_id) REFERENCES users(rowid), FOREIGN KEY(meme_id) REFERENCES memecache(rowid))')
 
 
@@ -69,11 +69,16 @@ def login_user(userName, pword):
             logging.debug(e)
 
 
-def add_user(username, password):
+def create_user(firstname, lastname, username, password):
     with db:
         try:
-            cur.execute('INSERT INTO users VALUES (rowid, ?, ?)', (username, password))
-            db.commit()
+            # Create new username if name is not taken.
+            if not cur.execute('SELECT * FROM users WHERE username=?', (username)):
+                cur.execute('INSERT INTO users VALUES (rowid, ?, ?, ?, ?)', (firstname, lastname, username, password))
+                db.commit()
+            
+            else:
+                return None
 
         except sqlite3.Error as e:
             logging.debug('SQL ERROR. Failed to add user.')

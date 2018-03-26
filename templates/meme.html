@@ -62,7 +62,7 @@
                 if (giphy_button_clicked === false) {
                     $.ajax({
                         url: '/meme',
-                        data: giphy_meme_id
+                        data: giphy_meme_id,
                         type: 'POST',
                         success: function() {
                             alert('Added to MemeBox');
