@@ -34,6 +34,7 @@ def get_meme(keyword, meme_only):
         logging.debug("url:" + url)  # to check for the url string
         json_data = requests.get(url).json()
 
+
         memes = []
 
         # create meme objects
@@ -42,7 +43,7 @@ def get_meme(keyword, meme_only):
             memes.append(meme)
 
         # Log number of memes found
-        logging.info('Giphy memes: ' + str(len(json_data)))
+        logging.info('GIPHY memes: ' + str(len(json_data['data'])))
 
         return memes
 

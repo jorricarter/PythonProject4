@@ -67,10 +67,12 @@ def index():
         memes = find_meme(keyword, meme_only)
 
         try:
+            logging.debug('Memes displayed')
             for meme in memes:
                 # logging the meme data
-                logging.debug("{}: title:{} img:{} link:{}".format(meme.source.upper(), str(meme.title), meme.img_src,
-                                                                   meme.post_link))
+                logging.debug("id:{} source::{}: title:{} img:{} link:{}".
+                             format(meme['rowid'], meme['source'].upper(), meme['post_title'], meme['img_src'],
+                                    meme['post_link']))
 
         except AttributeError as ae:
             logging.error(ae)

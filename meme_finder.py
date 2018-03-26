@@ -29,36 +29,29 @@ def find_meme(keyword, meme_only):
     # checks for the cache with the keyword and meme_only value
     fresh_meme_data, old_meme_source_list = retrieve_cache(keyword, meme_only)
 
-    # if no fresh meme data found, initialize new array
-    if fresh_meme_data is None:
-        fresh_meme_data = []
-
     # if sources are found in old_meme_source_list, get fresh memes from each API and refresh cache
     if len(old_meme_source_list) > 0:
         fresh_meme_data = get_fresh_memes(fresh_meme_data, old_meme_source_list, keyword, meme_only)
-        
-        
-    # write cache to db
-    for meme in fresh_meme_data:
-        add_meme(meme)
+
+        add_counter = 0
+        # write cache to db
+        for meme_list in fresh_meme_data:
+            for meme in meme_list:
+                if check_meme_exists(meme.img_src) is None:
+                    add_meme(meme)
+                    add_counter += 1
+        logging.info(str(add_counter) + " new dank memes were added to db")
+
+        # clear the list and just pick
+        fresh_meme_data = []
+        for source in old_meme_source_list:
+            fresh_meme_data.append(get_fresh_meme_from_source(keyword, meme_only, source))
 
     else:
         logging.info("Pulling (keyword:{} meme_only:{}) search results from cache".format(keyword, str(meme_only)))
 
-    try:
-        # picks one meme from each source and adds onto the memes list
-        memes = [select_random_by_source('giphy'),
-                 select_random_by_source('imgur'),
-                 select_random_by_source('reddit')]
+    return fresh_meme_data
 
-        # debug purposes to see the memes
-        for meme in memes:
-            logging.debug("find_meme(): " + meme.to_json())
-
-        return memes
-
-    except TypeError:
-        logging.error("No meme data")
 
 # Make API request calls to get new meme data if there are no fresh memes from the list
 def get_fresh_memes(fresh_meme_data, old_meme_source_list, keyword, meme_only):

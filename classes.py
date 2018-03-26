@@ -4,7 +4,7 @@ from meme_cache import TODAY
 
 # Meme class object:
 class Meme:
-    def __init__(self, meme_id='', post_link="/", img_src="", source="No source", post_title="No results", keyword="", meme_only=False, data='', date=TODAY):
+    def __init__(self, post_link="/", img_src="", source="No source", post_title="No results", keyword="", meme_only=True, date=TODAY, meme_id=''):
         self.meme_id = meme_id
         self.post_link = post_link  # post link
         self.img_src = img_src    # direct image link

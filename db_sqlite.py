@@ -9,13 +9,15 @@ TODAY = time.strftime("%y%m%d")  # sets today's date into yymmdd format
 fresh_period = 7
 
 db = sqlite3.connect('db/gif_finder_db.db')
+
 db.row_factory = sqlite3.Row
 cur = db.cursor()
+cur.execute("PRAGMA foreign_keys = 1")
 
+cur.execute('CREATE TABLE IF NOT EXISTS users (rowid INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, username text, password text)')
+cur.execute('CREATE TABLE IF NOT EXISTS memecache (rowid INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, post_link text,img_src text,post_title text,source text,keyword text,meme_only boolean, date date)')
+cur.execute('CREATE TABLE IF NOT EXISTS memebox (user_id INTEGER, meme_id INTEGER, FOREIGN KEY(user_id) REFERENCES users(rowid), FOREIGN KEY(meme_id) REFERENCES memecache(rowid))')
 
-cur.execute('CREATE TABLE IF NOT EXISTS users (username text, password text)')
-cur.execute('CREATE TABLE IF NOT EXISTS memecache (post_link text, img_src text, post_title text, source text, keyword text, meme_only boolean, date date)')
-cur.execute('CREATE TABLE IF NOT EXISTS memebox (user_id integer, meme_id integer)')
 
 def clear_old_cache():
     with db:
@@ -28,21 +30,39 @@ def clear_old_cache():
             logging.debug(e)
 
 
-def get_fresh_cache_data(kwd, memeOnly):
+# def get_fresh_cache_data(kwd, memeOnly):
+#     with db:
+#         try:
+#             cur.execute('SELECT * FROM memecache WHERE keyword=? and meme_only=?', (kwd, memeOnly))
+#             return cur.fetchall()
+#
+#         except sqlite3.Error as e:
+#             logging.debug('SQL ERROR. Failed searching cache.')
+#             logging.debug(e)
+
+
+def get_fresh_meme_from_source(keyword, meme_only, source):
     with db:
         try:
-            return cur.execute('SELECT FROM memecache WHERE keyword=? and meme_only=?', (kwd, memeOnly))
+            cur.execute('SELECT rowid, * FROM memecache WHERE keyword=? and meme_only=? and source=? ORDER BY RANDOM() LIMIT 1', (keyword, meme_only, source))
+            meme = dict(cur.fetchone())
+            return meme
 
         except sqlite3.Error as e:
             logging.debug('SQL ERROR. Failed searching cache.')
             logging.debug(e)
+            return None
+
+        except TypeError:
+            logging.info('No meme from {} found'.format(source))
+            return None
 
 
 def login_user(userName, pword):
     with db:
         try:
-            user = cur.execute('SELECT FROM users WHERE username=? AND password=?', (userName, pword))
-            return user.rowid
+            user = cur.execute('SELECT * FROM users WHERE username=? AND password=?', (userName, pword))
+            return user.rowId
 
         except sqlite3.Error as e:
             logging.debug('SQL ERROR. Failed to select user.')
@@ -71,11 +91,10 @@ def del_user(userId):
             logging.debug(e)
 
 
-
-def check_meme_exists(imageLink):
+def check_meme_exists(img_src):
     with db:
         try:
-            return cur.execute('SELECT FROM memecache WHERE img_link=?', (imageLink))
+            return cur.execute('SELECT * FROM memecache WHERE img_src=?', (img_src))
 
         except sqlite3.Error as e:
             logging.debug('SQL ERROR. Failed while checking meme list.')
@@ -85,28 +104,28 @@ def check_meme_exists(imageLink):
 def select_meme(memeId):
     with db:
         try:
-            return cur.execute('SELECT FROM memecache WHERE meme_id=?', (memeId))
+            return cur.execute('SELECT * FROM memecache WHERE meme_id=?', (memeId))
 
         except sqlite3.Error as e:
             logging.debug('SQL ERROR. Failed to return meme object.')
             logging.debug(e)
 
-def select_random_by_source(sourceId):
-    with db:
-        try:
-            return cur.execute('SELECT * FROM memecache WHERE source=? IN(SELECT source FROM table ORDER BY RANDOM() LIMIT 1)', (sourceId))
-            
 
-        except sqlite3.Error as e:
-            logging.debug('SQL ERROR. Failed to return meme object.')
-            logging.debug(e)
+# def select_random_by_source(sourceId):
+#     with db:
+#         try:
+#             return cur.execute('SELECT * FROM memecache WHERE source=? IN(SELECT source FROM table ORDER BY RANDOM() LIMIT 1)', (sourceId))
+#
+#         except sqlite3.Error as e:
+#             logging.debug('SQL ERROR. Failed to return meme object.')
+#             logging.debug(e)
 
 
 def add_meme(meme):
     with db:
         try:
-            cur.execute('INSERT INTO memecache VALUES (rowid, ?, ?, ?, ?, ?, ?, ?)', 
-            (meme.post_link, meme.img_link, meme.post_title, meme.source, meme.keyword, meme.meme_only, meme.date))
+            cur.execute('INSERT INTO memecache (post_link, img_src, post_title, source, keyword, meme_only, date) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            (meme.post_link, meme.img_src, meme.post_title, meme.source, meme.keyword, meme.meme_only, meme.date))
             
             db.commit()
 
@@ -180,38 +199,37 @@ def close_db():
             logging.debug(e)
 
 
-
 # Checks if cache has the fresh meme data with the matching keyword, meme_only value
 def retrieve_cache(keyword, meme_only):
 
     # delete expired=today-fresh_period from memecache table
     clear_old_cache()
-
+    fresh_meme_data = []
+    meme_source = ['giphy', 'imgur', 'reddit']
     try:
-        fresh_meme_data = get_fresh_cache_data(keyword, meme_only)
-        logging.info('Fresh memes: ' + str(fresh_meme_data))
+
+        for source in meme_source:
+            meme = get_fresh_meme_from_source(keyword, meme_only, source)
+            if meme is not None:
+                fresh_meme_data.append(meme)
+
+        # remove source from list if found in cache
+        # https://stackoverflow.com/questions/9371114/check-if-list-of-objects-contain-an-object-with-a-certain-attribute-value
+        for meme in fresh_meme_data:
+            if meme['source'] == "giphy" and "giphy" in meme_source:
+                meme_source.remove("giphy")
+            elif meme['source'] == "imgur" and "imgur" in meme_source:
+                meme_source.remove("imgur")
+            elif meme['source'] == "reddit" and "reddit" in meme_source:
+                meme_source.remove("reddit")
+
+        # if there are no fresh meme in the cache
+        if len(meme_source) > 0:
+            logging.info("Could not find fresh cache from: " +
+                         str(meme_source))
 
     except TypeError as e:
         logging.error(e)
         logging.error("No fresh memes")
 
-    # add to old_meme_source_list if there are no fresh meme data from that source
-    old_meme_source = ['giphy', 'imgur', 'reddit']
-
-    # remove source from list if found in cache
-    # https://stackoverflow.com/questions/9371114/check-if-list-of-objects-contain-an-object-with-a-certain-attribute-value
-    if fresh_meme_data:
-        for meme in fresh_meme_data:
-            if meme.source == "giphy":
-                old_meme_source.remove("giphy")
-            elif meme.source == "imgur":
-                old_meme_source.remove("imgur")
-            elif meme.source == "reddit":
-                old_meme_source.remove("reddit")
-
-    # if there are no fresh meme in the cache
-    if len(old_meme_source) > 0:
-        logging.info("Could not find fresh cache from: " +
-                     str(old_meme_source))
-
-    return fresh_meme_data, old_meme_source
+    return fresh_meme_data, meme_source
