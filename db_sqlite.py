@@ -44,7 +44,7 @@ def clear_old_cache():
 def get_fresh_meme_from_source(keyword, meme_only, source):
     with db:
         try:
-            cur.execute('SELECT rowid, * FROM memecache WHERE keyword=? and meme_only=? and source=? ORDER BY RANDOM() LIMIT 1', (keyword, meme_only, source))
+            cur.execute('SELECT * FROM memecache WHERE keyword=? and meme_only=? and source=? ORDER BY RANDOM() LIMIT 1', (keyword, meme_only, source))
             meme = dict(cur.fetchone())
             return meme
 
@@ -94,11 +94,18 @@ def del_user(userId):
 def check_meme_exists(img_src):
     with db:
         try:
-            return cur.execute('SELECT * FROM memecache WHERE img_src=?', (img_src))
+            cur.execute('SELECT * FROM memecache WHERE img_src=?', (img_src))
+            exist = cur.fetchall()
+            return True
 
         except sqlite3.Error as e:
             logging.debug('SQL ERROR. Failed while checking meme list.')
             logging.debug(e)
+            return False
+
+        except TypeError:
+            logging.info('No identical meme found')
+            return False
 
 
 def select_meme(memeId):

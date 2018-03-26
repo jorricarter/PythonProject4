@@ -31,19 +31,17 @@ def find_meme(keyword, meme_only):
 
     # if sources are found in old_meme_source_list, get fresh memes from each API and refresh cache
     if len(old_meme_source_list) > 0:
-        fresh_meme_data = get_fresh_memes(fresh_meme_data, old_meme_source_list, keyword, meme_only)
+        fresh_meme_data_from_api = get_fresh_memes(old_meme_source_list, keyword, meme_only)
 
         add_counter = 0
         # write cache to db
-        for meme_list in fresh_meme_data:
+        for meme_list in fresh_meme_data_from_api:
             for meme in meme_list:
-                if check_meme_exists(meme.img_src) is None:
+                if not check_meme_exists(meme.img_src):
                     add_meme(meme)
                     add_counter += 1
         logging.info(str(add_counter) + " new dank memes were added to db")
 
-        # clear the list and just pick
-        fresh_meme_data = []
         for source in old_meme_source_list:
             fresh_meme_data.append(get_fresh_meme_from_source(keyword, meme_only, source))
 
@@ -54,7 +52,8 @@ def find_meme(keyword, meme_only):
 
 
 # Make API request calls to get new meme data if there are no fresh memes from the list
-def get_fresh_memes(fresh_meme_data, old_meme_source_list, keyword, meme_only):
+def get_fresh_memes(old_meme_source_list, keyword, meme_only):
+    fresh_meme_data = []
     num_threads = 3  # Number of threads to run in parallel
 
     start_time = time.time()    # start timer
