@@ -37,7 +37,7 @@ def get_meme(keyword, meme_only):
         memes = []
 
         # create meme objects
-        for entry in json_data:
+        for entry in json_data['data']:
             meme = create_meme_object(entry, keyword, meme_only)
             memes.append(meme)
 

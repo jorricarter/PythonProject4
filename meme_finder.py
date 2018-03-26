@@ -29,10 +29,18 @@ def find_meme(keyword, meme_only):
     # checks for the cache with the keyword and meme_only value
     fresh_meme_data, old_meme_source_list = retrieve_cache(keyword, meme_only)
 
+    # if no fresh meme data found, initialize new array
+    if fresh_meme_data is None:
+        fresh_meme_data = []
+
     # if sources are found in old_meme_source_list, get fresh memes from each API and refresh cache
     if len(old_meme_source_list) > 0:
         fresh_meme_data = get_fresh_memes(fresh_meme_data, old_meme_source_list, keyword, meme_only)
         
+        
+    # write cache to db
+    for meme in fresh_meme_data:
+        add_meme(meme)
 
     else:
         logging.info("Pulling (keyword:{} meme_only:{}) search results from cache".format(keyword, str(meme_only)))
