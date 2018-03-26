@@ -14,8 +14,8 @@ db.row_factory = sqlite3.Row
 cur = db.cursor()
 cur.execute("PRAGMA foreign_keys = 1")
 
-cur.execute('CREATE TABLE IF NOT EXISTS users (rowid INTEGER NOT NULL PRIMARY KEY UNIQUE, firstname text, lastname text, username text, password text)')
-cur.execute('CREATE TABLE IF NOT EXISTS memecache (rowid INTEGER NOT NULL PRIMARY KEY UNIQUE,post_link text,img_src text,post_title text,source text,keyword text,meme_only boolean, date date)')
+cur.execute('CREATE TABLE IF NOT EXISTS users (rowid INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, username text UNIQUE, password text)')
+cur.execute('CREATE TABLE IF NOT EXISTS memecache (rowid INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, post_link text,img_src text,post_title text,source text,keyword text,meme_only boolean, date date)')
 cur.execute('CREATE TABLE IF NOT EXISTS memebox (user_id INTEGER, meme_id INTEGER, FOREIGN KEY(user_id) REFERENCES users(rowid), FOREIGN KEY(meme_id) REFERENCES memecache(rowid))')
 
 
@@ -61,29 +61,31 @@ def get_fresh_meme_from_source(keyword, meme_only, source):
 def login_user(userName, pword):
     with db:
         try:
-            user = cur.execute('SELECT * FROM users WHERE username=? AND password=?', (userName, pword))
-            return user.rowId
+            cur.execute('SELECT * FROM users WHERE username=? AND password=?', (userName, pword))
+            user = dict(cur.fetchone())
+            return user
 
         except sqlite3.Error as e:
             logging.debug('SQL ERROR. Failed to select user.')
             logging.debug(e)
+            return None
+
+        except TypeError:
+            logging.info('No user with the matching password found')
+            return None
 
 
-def create_user(firstname, lastname, username, password):
+def add_user(username, password):
     with db:
         try:
-            # Create new username if name is not taken.
-            if not cur.execute('SELECT * FROM users WHERE username=?', (username)):
-                user = cur.execute('INSERT INTO users VALUES (rowid, ?, ?, ?, ?)', (firstname, lastname, username, password))
-                db.commit()
-                return user.rowId
-            
-            else:
-                return False
+            cur.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password))
+            db.commit()
+            return True
 
         except sqlite3.Error as e:
             logging.debug('SQL ERROR. Failed to add user.')
             logging.debug(e)
+            return False
 
 
 def del_user(userId):
@@ -159,13 +161,20 @@ def del_meme(memeId):
             logging.debug(e)
 
 
-
 def sel_memebox(username):
     with db:
         try:
             logging.info("Loading " + username + "'s memebox...")
-            userId = cur.execute('SELECT rowid FROM users WHERE username=?', (username))
-            memebox = cur.execute('SELECT * FROM memecache WHERE rowid=?', (userId))
+            cur.execute('SELECT rowid FROM users WHERE username=?', (username,))
+            user_id = cur.fetchone()
+
+            cur.execute('SELECT * FROM memecache WHERE rowid=?', (user_id,))
+            memebox = []
+            memes = cur.fetchall()
+
+            for meme in memes:
+                memebox.append(dict(meme))
+
             return memebox
 
         except sqlite3.Error as e:
@@ -181,10 +190,12 @@ def add_to_memebox(userId, memeId):
                          " into user " + str(userId) + "'s memebox")
 
             db.commit()
+            return True
 
         except sqlite3.Error as e:
             logging.debug('SQL ERROR. Failed to add meme to memebox.')
             logging.debug(e)
+            return False
 
 
 def del_from_memebox(userId, memeId):

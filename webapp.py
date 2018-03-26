@@ -3,7 +3,7 @@
 
 import logging
 from flask import Flask, render_template, request
-from wtforms import Form, StringField, BooleanField, validators   # Flask input validator extension module
+from wtforms import Form, StringField, BooleanField, validators, PasswordField   # Flask input validator extension module
 from meme_logging import logging_setup
 from meme_finder import find_meme
 from db_sqlite import *
@@ -15,63 +15,79 @@ logging_setup()
 
 app = Flask(__name__)
 
-user = ''
+user = None
 
 class MemeSearchForm(Form):
     keyword = StringField('keyword', [validators.Length(min=1, max=30)])    # validate input to be 1-30 characters long
     meme_only = BooleanField('meme_only')
 
 class LoginForm(Form):
-    username = StringField('uname', [validators.Length(min=1, max=30)])
-    password = StringField('pword', [validators.Length(min=1, max=30)])
+    username = StringField('username', [validators.Length(min=1, max=30)])
+    password = PasswordField('password', [validators.Length(min=1, max=30)])
 
-class NewUserForm(Form):
-    firstname = StringField('firstname', [validators.Length(min=1, max=30)])
-    lastname = StringField('lastname', [validators.Length(min=1, max=30)])
-    newUsername = StringField('new_uname', [validators.Length(min=1, max=30)])
-    newPassword = StringField('new_password', [validators.Length(min=1, max=30)])
 
-@app.route("/login", methods=['POST', 'GET'])
-def login():
-
+@app.route("/login_page", methods=['POST', 'GET'])
+def login_page():
+    global user
     login_form = LoginForm(request.form)
-    new_user_form = NewUserForm(request.form)
-
     if request.method == 'POST' and login_form.validate():
-        uname = login_form.username
-        pword = login_form.password
-        
-        # attempt login
-        try:
-            # login method gets user ID
-            userid = login_user(uname, pword)
-        
-        except AttributeError as ae:
-            logging.error(ae)
-        except UnicodeEncodeError as ue:
-            logging.error(ue)
+
+        username = login_form.username.data
+        password = login_form.password.data
+
+        user = login_user(username, password)
+
+        if user:
+            return render_template('index.html', user=user)
+
+        else:
+            return render_template('login_page.html', user=False)
+
+    return render_template('login_page.html', user=user)
 
 
-        return render_template('index.html', user=userid)
+@app.route("/signup", methods=['POST', 'GET'])
+def signup():
+    global user
+    signup_form = LoginForm(request.form)
+    if request.method == 'POST' and signup_form.validate():
+
+        username = signup_form.username.data
+        password = signup_form.password.data
+
+        user = add_user(username, password)
+
+        if user:
+            user = login_user(username, password)
+            return render_template('index.html', user=user)
+
+        else:
+            return render_template('signup.html', user=False)
+
+    return render_template('signup.html', user=user)
 
 
-    elif request.method == 'POST' and new_user_form.validate():
-
-        fname = new_user_form.firstname
-        lname = new_user_form.lastname
-        uname = new_user_form.newUsername
-        pword = new_user_form.newPassword
-
-        # Send vars to DB to create new user
-        userid = create_user(fname, lname, uname, pword)
-
-
-        return render_template('index.html', user=userid)
-
-
-    # if user visits Change User via the link at the bottom of the page
-    else:
-        return render_template('login.html')
+# @app.route("/login", methods=['POST', 'GET'])
+# def login():
+#
+#     login_form = LoginForm(request.form)
+#     if request.method == 'POST' and login_form.validate():
+#         uname = login_form.username
+#         pword = login_form.password
+#
+#         # attempt login
+#         try:
+#             # login method gets user ID
+#             user = login_user(uname, pword)
+#
+#         except Exception as e:
+#             logging.info('Failed to log in: ' + e)
+#
+#         return render_template('index.html')
+#
+#     # if user visits Change User via the link at the bottom of the page
+#     else:
+#         return render_template('login.html')
 
 
 # index page
@@ -104,16 +120,16 @@ def index():
         except UnicodeEncodeError as ue:
             logging.error(ue)
 
-        return render_template('meme.html', keyword=keyword, memes=memes)
+        return render_template('meme.html', keyword=keyword, memes=memes, user=user)
 
-    return render_template('index.html')
+    return render_template('index.html', user=user)
 
 
 # about page
 @app.route("/about")
 def about():
 
-    return render_template('about.html')
+    return render_template('about.html', user=user)
 
 
 # meme page. Displays memes based on the keyword
@@ -122,8 +138,9 @@ def meme():
 
     # save a meme to MemeBox if user presses the button on the meme page
     if request.method == 'POST':
-        # Meme object in dictionary form
-        add_to_memebox(user, meme.meme_id)
+
+        meme_to_save = request.form.to_dict()  # Meme object in dictionary form
+        add_to_memebox(meme_to_save['user_id'], meme_to_save['meme_id'])
         logging.info("Saved data: " + str(meme))
 
         # need to return something, else valueError will occur
@@ -150,13 +167,13 @@ def memebox():
         memebox_items = sel_memebox(user)
 
         # And render the memebox.html using the refreshed list
-        return render_template('memebox.html', memebox_items=memebox_items)
+        return render_template('memebox.html', memebox_items=memebox_items, user=user)
 
     # if user visits the MemeBox via the link at the bottom of the page
     else:
         memebox_items = sel_memebox(user)
 
-        return render_template('memebox.html', memebox_items=memebox_items)
+        return render_template('memebox.html', memebox_items=memebox_items, user=user)
 
 
 if __name__ == "__main__":

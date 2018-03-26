@@ -1,0 +1,23 @@
+{% extends "layout.html" %} {% block content %}
+
+<div class="container">
+    <form name="signup_form" method="POST">
+
+        <table>
+            <tr>
+                <td>Username</td>
+                <td><input type="text" name="username"></td>
+                <td rowspan="2"><input type="submit" name="signup" value="Signup"></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input type="text" name="password"></td>
+            </tr>
+        </table>
+    </form>
+    {% if user == False %}
+    Username already exists
+    {% endif %}
+</div>
+
+{% endblock %}

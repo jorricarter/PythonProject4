@@ -1,0 +1,25 @@
+{% extends "layout.html" %} {% block content %}
+
+<div class="container">
+    <form name="login_form" method="POST">
+        <table>
+            <tr>
+                <td>Username</td>
+                <td><input type="text" name="username"></td>
+                <td rowspan="2"><input type="submit" name="Log in" value="Log in"></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input type="password" name="password"></td>
+            </tr>
+        </table>
+    </form>
+
+    {% if user == False %}
+    No matching username/password found
+    {% endif %}
+
+    <p>Don't have a username? <a href="/signup">Signup!</a></p>
+</div>
+
+{% endblock %}
