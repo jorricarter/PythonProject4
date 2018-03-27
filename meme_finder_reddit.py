@@ -3,7 +3,6 @@
 
 from secrets import REDDIT_ID, REDDIT_SECRET
 import praw
-import _thread
 import logging
 from praw.exceptions import APIException, ClientException, PRAWException
 from classes import Meme
@@ -47,20 +46,18 @@ def get_meme(keyword, meme_only):
     time_filter = 'all'     # Can be one of: all, day, hour, month, week, year (default: all).
     lim = 100      # maximum number of memes to return
 
-
     try:
         # create a memes list and if the submission url ends with the file extension
         # (In another words, 4th character from the end with a period), append the url and shortlink dictionary to the list
-        # results = []
-        memes = []
+        results = []
         submissions = reddit.subreddit(subreddit).search(keyword, sort=sort, syntax=syntax, time_filter=time_filter, limit=lim)
         for submission in submissions:
             if submission.url[-4] == '.':
-                memes.append(Meme(submission.title, submission.shortlink, 'reddit', submission.url, keyword, meme_only))
-                #results.append()
+                results.append({'title': submission.title, 'url': submission.url, 'shortlink': submission.shortlink})
 
-#        for meme in results:Meme(submission.title, submission.shortlink, 'reddit', submission.url, keyword, meme_only)
-#            memes.append(create_meme_object(meme, keyword, meme_only))
+        memes = []
+        for meme in results:
+            memes.append(create_meme_object(meme, keyword, meme_only))
 
         logging.info("REDDIT memes: " + str(len(memes)))
 
@@ -80,13 +77,13 @@ def get_meme(keyword, meme_only):
     #     return Meme('reddit')
 
 
-def create_meme_object(title, shortlink, url, kw, mo):
+def create_meme_object(data, kw, mo):
 
-    post_title = title   # post title
-    post_link = shortlink   # reddit post link
-    imc_src = url  # img src
+    post_title = str(data['title'])   # post title
+    post_link = data['shortlink']   # reddit post link
+    imc_src = data['url']  # img src
 
-    reddit_meme = Meme(post_link, imc_src, 'reddit', post_title, kw, mo)
+    reddit_meme = Meme(post_link, imc_src,  'reddit', post_title, kw, mo)
 
     return reddit_meme
 
@@ -97,4 +94,3 @@ def create_meme_object(title, shortlink, url, kw, mo):
 # if __name__ == "__main__":
 #     keyword = input('Enter a keyword to search a meme for: ')
 #     get_meme(keyword, 'on')
-

@@ -2,7 +2,7 @@
 # WTForms documentation https://wtforms.readthedocs.io/en/stable/
 
 import logging
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from wtforms import Form, StringField, BooleanField, validators, PasswordField   # Flask input validator extension module
 from meme_logging import logging_setup
 from meme_finder import find_meme
@@ -38,7 +38,7 @@ def login_page():
         user = login_user(username, password)
 
         if user:
-            return render_template('index.html', user=user)
+            return redirect('/')
 
         else:
             return render_template('login_page.html', user=False)
@@ -59,13 +59,19 @@ def signup():
 
         if user:
             user = login_user(username, password)
-            return render_template('index.html', user=user)
+            return redirect('/')
 
         else:
             return render_template('signup.html', user=False)
 
     return render_template('signup.html', user=user)
 
+# set the user value back to None and redirect to index page
+@app.route("/logout")
+def logout():
+    global user
+    user = None
+    return redirect('/')
 
 # @app.route("/login", methods=['POST', 'GET'])
 # def login():

@@ -17,9 +17,10 @@
     <div class="page-header">
         <span id="meme_finder">MEME FINDER</span>
         {% if user == None %}
-        <span class="login"><a href="/login_page" id="login_page_link">Login</a></span></span>
+        <span id="login"><a href="/login_page" id="login_page_link">Login</a></span></span>
         {% else %}
-        <span class="login">Welcome {{ user.username }}</span>
+        <br>
+        Welcome {{ user.username }}  <span id="logout"><a href="/logout">Log out</a></span>
         {% endif %}
 
 

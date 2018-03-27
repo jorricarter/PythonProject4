@@ -24,11 +24,18 @@ img{
     padding-bottom: 40px;
 }
 
-.login{
+#login{
     position: relative;
     left: 100px;
     font-size: 20px;
 }
+
+#logout{
+    position: relative;
+    left: 200px;
+    font-size: 20px;
+}
+
 
 #meme_finder{
     font-size: 50px;
