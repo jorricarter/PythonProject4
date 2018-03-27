@@ -168,12 +168,13 @@ def sel_memebox(username):
             # get the meme_ids that the user selected and make a list
             cur.execute('SELECT meme_id FROM memebox WHERE user_id=?', (user_id,))
             ids = cur.fetchall()
-
             meme_id_list = []
             for id in ids:
                 meme_id_list.append(id[0])
 
-            query = 'SELECT * FROM memecache WHERE rowid IN (%s)' % ','.join('?' for id in meme_id_list)
+            # find the data from memecache with the matching meme_id, and order by rowid DESC.
+            #   This way, the memes added later would popup first
+            query = 'SELECT * FROM memecache WHERE rowid IN (%s) ORDER BY rowid DESC' % ','.join('?' for id in meme_id_list)
             memes = cur.execute(query, meme_id_list)
             memebox = []
             for meme in memes:

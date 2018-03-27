@@ -41,3 +41,7 @@ img{
     font-size: 50px;
     text-align: center;
 }
+
+#bot_padding{
+    padding_bottom: 50px;
+}
