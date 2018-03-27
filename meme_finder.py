@@ -1,12 +1,7 @@
-import time
-import random
-import logging
-import json
 import meme_finder_giphy
 import meme_finder_imgur
 import meme_finder_reddit
 import concurrent.futures
-import classes
 from db_sqlite import *
 
 

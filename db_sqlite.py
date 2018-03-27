@@ -1,19 +1,24 @@
 import sqlite3
 import logging
 import time
-import datetime
+import os
 
 
 TODAY = time.strftime("%y%m%d")  # sets today's date into yymmdd format
 # Number of days that the meme data is considered "fresh". Default = 7 days
 fresh_period = 7
 
-db = sqlite3.connect('db/gif_finder_db.db')
+db_folder = 'db'
+# will try to create logs folder. Doesn't raise exception even if it exists
+os.makedirs(db_folder, exist_ok=True)
+db_path = os.path.join(db_folder, 'gif_finder_db.db')
+db = sqlite3.connect(db_path)
 
 db.row_factory = sqlite3.Row
 cur = db.cursor()
 cur.execute("PRAGMA foreign_keys = 1")
 
+# create table
 cur.execute('CREATE TABLE IF NOT EXISTS users (rowid INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, username text UNIQUE, password text)')
 cur.execute('CREATE TABLE IF NOT EXISTS memecache (rowid INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, post_link text,img_src text,post_title text,source text,keyword text,meme_only boolean, date date)')
 cur.execute('CREATE TABLE IF NOT EXISTS memebox (user_id INTEGER, meme_id INTEGER, FOREIGN KEY(user_id) REFERENCES users(rowid), FOREIGN KEY(meme_id) REFERENCES memecache(rowid))')
@@ -22,23 +27,12 @@ cur.execute('CREATE TABLE IF NOT EXISTS memebox (user_id INTEGER, meme_id INTEGE
 def clear_old_cache():
     with db:
         try: 
-            cur.execute('DELETE FROM memecache WHERE date < DATEADD(day, -7, ?)', (TODAY))  
+            cur.execute('DELETE FROM memecache WHERE date < DATEADD(day, -7, ?)', (TODAY,))
             db.commit()
 
         except sqlite3.Error as e:
             logging.debug('SQL ERROR. Failed to clear cache.')
             logging.debug(e)
-
-
-# def get_fresh_cache_data(kwd, memeOnly):
-#     with db:
-#         try:
-#             cur.execute('SELECT * FROM memecache WHERE keyword=? and meme_only=?', (kwd, memeOnly))
-#             return cur.fetchall()
-#
-#         except sqlite3.Error as e:
-#             logging.debug('SQL ERROR. Failed searching cache.')
-#             logging.debug(e)
 
 
 def get_fresh_meme_from_source(keyword, meme_only, source):

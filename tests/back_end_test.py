@@ -1,57 +1,61 @@
 import meme_finder_imgur
 import meme_finder
-import meme_cache
-import os
+import db_sqlite
 import shutil
 from unittest.mock import patch
-from meme_finder import Meme, MemeCache
+from classes import Meme, MemeCache
 from unittest import TestCase, main
 from imgurpython.imgur.models.gallery_album import GalleryAlbum
+import sqlite3
+import os
+
 
 
 class TestMemeCacheModule(TestCase):
 
-    def setUp(self):
-        # cache path settings
-        meme_cache.cache_folder = 'test_cache'  # cache folder name. Default = cache
-        meme_cache.cache_file_name = 'cache.pickle'  # Default = cache.pickle
-        meme_cache.cache_file_path = os.path.join(meme_cache.cache_folder, meme_cache.cache_file_name)
-
-        # MemeBox path settings
-        meme_cache.memebox_folder = 'test_memebox'
-        meme_cache.memebox_file = 'memebox.pickle'
-        meme_cache.memebox_file_path = os.path.join(meme_cache.memebox_folder, meme_cache.memebox_file)
-
     def tearDown(self):
-        # remove temp folder & file
-        if os.path.isdir(meme_cache.cache_folder):
-            shutil.rmtree(meme_cache.cache_folder)
-        if os.path.isdir(meme_cache.memebox_folder):
-            shutil.rmtree(meme_cache.memebox_folder)
+        db_sqlite.db = sqlite3.connect(db_sqlite.db_path)
+        db_sqlite.db.row_factory = sqlite3.Row
+        db_sqlite.cur = db_sqlite.db.cursor()
+        db_sqlite.cur.execute('DELETE FROM memebox')
+        db_sqlite.cur.execute('DELETE FROM memecache')
+        db_sqlite.cur.execute('DELETE FROM users')
+        db_sqlite.db.commit
+        db_sqlite.close_db()
 
-    # Tests if we can successfully pickle and unpickle data
-    def test_pickle_unpickle_data(self):
-        # create a test MemeCache object and create an object list for pickle/unpickle testing
-        test_memecache = MemeCache('cat', True, 'source', 'memedata', 'date')
-        test_memecache_2 = MemeCache('dog', True, 'source', 'memedata', 'date')
-        test_memecache_list = [test_memecache, test_memecache_2]
+    def test_get_new_memes_from_api(self):
+        db_sqlite.cur.execute('SELECT * FROM memecache')
+        cache = db_sqlite.cur.fetchall()
 
-        # pickle_data() creates directory and creates pickle file if it doesn't exist
-        self.assertFalse(os.path.isdir(meme_cache.cache_folder)) # verify that folder doesn't exist
-        self.assertFalse(os.path.exists(meme_cache.cache_file_path)) # verify that file doesn't exist
+        self.assertCountEqual(cache, [])            # assert that cache is empty
 
-        # pickle test_memecache_list and unpickle to unpickled_cache_data
-        meme_cache.pickle_data(test_memecache_list)
-        unpickled_cache_data = meme_cache.unpickle_data()
+        cat_memes = meme_finder.find_meme(keyword='cat', meme_only=True)
 
-        # It should have created folder & file
-        self.assertTrue(os.path.isdir(meme_cache.cache_folder))  # verify that folder has been created
-        self.assertTrue(os.path.exists(meme_cache.cache_file_path))  # verify that file has been created
+        print(len(cat_memes))
 
-        # test of they still have the same data after pickle/unpickling by converting
-        # the MemeCache object to json/dictionary value using to_json function.
-        self.assertEqual(test_memecache_list[0].to_json(), unpickled_cache_data[0].to_json())
-        self.assertEqual(test_memecache_list[1].to_json(), unpickled_cache_data[1].to_json())
+    # # Tests if we can successfully pickle and unpickle data
+    # def test_pickle_unpickle_data(self):
+    #     # create a test MemeCache object and create an object list for pickle/unpickle testing
+    #     test_memecache = MemeCache('cat', True, 'source', 'memedata', 'date')
+    #     test_memecache_2 = MemeCache('dog', True, 'source', 'memedata', 'date')
+    #     test_memecache_list = [test_memecache, test_memecache_2]
+    #
+    #     # pickle_data() creates directory and creates pickle file if it doesn't exist
+    #     self.assertFalse(os.path.isdir(db_folder)) # verify that folder doesn't exist
+    #     self.assertFalse(os.path.exists(db_path)) # verify that file doesn't exist
+    #
+    #     # pickle test_memecache_list and unpickle to unpickled_cache_data
+    #     meme_cache.pickle_data(test_memecache_list)
+    #     unpickled_cache_data = meme_cache.unpickle_data()
+    #
+    #     # It should have created folder & file
+    #     self.assertTrue(os.path.isdir(meme_cache.cache_folder))  # verify that folder has been created
+    #     self.assertTrue(os.path.exists(meme_cache.cache_file_path))  # verify that file has been created
+    #
+    #     # test of they still have the same data after pickle/unpickling by converting
+    #     # the MemeCache object to json/dictionary value using to_json function.
+    #     self.assertEqual(test_memecache_list[0].to_json(), unpickled_cache_data[0].to_json())
+    #     self.assertEqual(test_memecache_list[1].to_json(), unpickled_cache_data[1].to_json())
 
     # Tests if check_cache() will return fresh cache only
     def test_check_cache_fresh_period(self):

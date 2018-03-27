@@ -1,6 +1,6 @@
 import time
 import json
-from meme_cache import TODAY
+from db_sqlite import TODAY
 
 # Meme class object:
 class Meme:

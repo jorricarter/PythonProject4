@@ -34,7 +34,6 @@ def get_meme(keyword, meme_only):
         logging.debug("url:" + url)  # to check for the url string
         json_data = requests.get(url).json()
 
-
         memes = []
 
         # create meme objects
