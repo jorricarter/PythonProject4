@@ -159,25 +159,20 @@ def memebox():
     # if user presses delete button beside the meme, delete the meme
     if request.method == 'POST':
 
-        memebox_items = sel_memebox(user)
-
-        # get the name=(MemeBox index number) of the submit button
+        # get the name=(Memecache rowid) of the submit button
         meme_delete = int(list(request.form)[0])
 
         logging.debug("index " + str(meme_delete) + " will be deleted")  # debug msg
 
         # delete the meme from the MemeBox using the id of the meme in the index number
-        del_meme(memebox_items[meme_delete].memeId)
+        del_meme(user['rowid'], meme_delete)
 
-        # refresh MemeBox contents
-        memebox_items = sel_memebox(user)
-
-        # And render the memebox.html using the refreshed list
-        return render_template('memebox.html', memebox_items=memebox_items, user=user)
+        return redirect('/memebox')
 
     # if user visits the MemeBox via the link at the bottom of the page
     else:
-        memebox_items = sel_memebox(user)
+        memebox_items = sel_memebox(user['username'])
+        print(memebox_items)
 
         return render_template('memebox.html', memebox_items=memebox_items, user=user)
 

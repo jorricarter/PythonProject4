@@ -149,29 +149,39 @@ def add_meme(meme):
             logging.debug(e)
 
 
-def del_meme(memeId):
+def del_meme(user_id, meme_id):
     with db:
         try:
-            cur.execute('DELETE FROM memecache WHERE meme_id=?', (memeId))
+            cur.execute('DELETE FROM memebox WHERE user_id=? and meme_id=?', (user_id, meme_id))
 
             db.commit()
+            return True
 
         except sqlite3.Error as e:
             logging.debug('SQL ERROR. Failed to delete meme.')
             logging.debug(e)
+            return False
 
 
 def sel_memebox(username):
     with db:
         try:
+            # find the user_id from username
             logging.info("Loading " + username + "'s memebox...")
             cur.execute('SELECT rowid FROM users WHERE username=?', (username,))
-            user_id = cur.fetchone()
+            user_id = cur.fetchone()[0]
 
-            cur.execute('SELECT * FROM memecache WHERE rowid=?', (user_id,))
+            # get the meme_ids that the user selected and make a list
+            cur.execute('SELECT meme_id FROM memebox WHERE user_id=?', (user_id,))
+            ids = cur.fetchall()
+
+            meme_id_list = []
+            for id in ids:
+                meme_id_list.append(id[0])
+
+            query = 'SELECT * FROM memecache WHERE rowid IN (%s)' % ','.join('?' for id in meme_id_list)
+            memes = cur.execute(query, meme_id_list)
             memebox = []
-            memes = cur.fetchall()
-
             for meme in memes:
                 memebox.append(dict(meme))
 
@@ -186,10 +196,11 @@ def add_to_memebox(userId, memeId):
     with db:
         try:
             cur.execute('INSERT INTO memebox VALUES (?, ?)', (userId, memeId))
+
+            db.commit()
             logging.info("Inserted meme " + str(memeId) +
                          " into user " + str(userId) + "'s memebox")
 
-            db.commit()
             return True
 
         except sqlite3.Error as e:
