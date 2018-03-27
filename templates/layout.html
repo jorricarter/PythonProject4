@@ -15,14 +15,13 @@
 <body>
 
     <div class="page-header">
-        <span id="meme_finder">MEME FINDER</span>
+        <a href="/" id="meme_finder"><B>MEME FINDER</B></a>
         {% if user == None or user == False %}
-        <span id="login"><a href="/login_page" id="login_page_link">Login</a></span></span>
+        <span id="login"><a href="/login_page" id="login_page_link">Login</a></span>
         {% else %}
         <br>
         Welcome {{ user.username }}  <span id="logout"><a href="/logout">Log out</a></span>
         {% endif %}
-
 
     </div>
     <hr>
@@ -31,8 +30,6 @@
 
     <hr>
     <p>
-        <a href="/" id="main_link">Search</a>
-        <!--<a href="/login" id="login_link">Login/Change User</a>-->
         {% if user != None %}
             <a href="/memebox" id="memebox_link">MemeBox</a>
         {% endif %}
